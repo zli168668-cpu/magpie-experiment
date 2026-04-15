@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Magpie Experiment — Live the Real China</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ================================================================
+   ★★★ 你的控制台 — 只需要改这里，下面的代码永远不用动 ★★★
+   用记事本/VSCode打开文件，改完保存，刷新浏览器即可看到效果
+   ================================================================
+
+   【字体替换方法】
+   想换字体？去 fonts.google.com 搜索，点字体→Copy link tag
+   把第8行的<link href="...">替换掉，然后把下面字体名改成新字体名
+   常用标题字体推荐：Playfair Display / EB Garamond / Libre Baskerville
+   常用正文字体推荐：DM Sans / Outfit / Plus Jakarta Sans
+
+   【颜色修改方法】
+   颜色代码去 colorhunt.co 或 coolors.co 找，复制#开头的6位代码替换
+
+   【按钮颜色】
+   改 --color-btn 这一个值，全站所有按钮同步变色
+
+   ================================================================ */
+
+:root {
+
+  /* ┌─────────────────────────────────────────┐
+     │  图片区 — 替换为你的Cloudinary链接        │
+     └─────────────────────────────────────────┘ */
+  --img-hero:       url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094381/IMG-01_rqvfxv.jpg');
+  --img-founder:    url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776090667/34_m0haa9.jpg');
+  --img-land1:      url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094380/IMG-03_duprgd.jpg');
+  --img-garden1:    url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094378/IMG-04-2_adldui.jpg');
+  --img-garden2:    url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094378/IMG-04-1_brxnoi.jpg');
+  --img-market1:    url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094379/IMG-05-2_j4vaoe.jpg');
+  --img-market2:    url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094380/IMG-05-1_x31mkw.jpg');
+  --img-village1:   url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094381/IMG-06-3_t1tt8z.jpg');
+  --img-village2:   url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094381/IMG-06-2_evj5qk.jpg');
+  --img-room1:      url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094380/IMG-02_yzyxsh.jpg');
+  --img-room2:      url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094384/IMG-07-1_uexdxh.jpg');
+  --img-community:  url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776090657/2_ctuxlz.jpg');
+  --img-fireworks:  url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776091020/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260413103606_69_278_ivgsnb.jpg');
+  --img-music:      url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776094384/IMG-08-2_gxsfpx.jpg');
+  --img-footer:     url('https://res.cloudinary.com/dubrdum4z/image/upload/v1776090658/12_dtobnf.jpg');
+
+  /* ┌──────────────────────────────────────────────────────┐
+     │  图片显示位置 — 改这里移动每张图的裁剪位置             │
+     │  格式：X轴 Y轴                                        │
+     │  X: left / center / right / 0%~100%                  │
+     │  Y: top  / center / bottom / 0%~100%                 │
+     │  例：center top = 水平居中从顶部开始                   │
+     │      40% 60%  = 水平偏左一点，垂直偏下一点             │
+     └──────────────────────────────────────────────────────┘ */
+  --pos-hero:      center center;   /* 第一屏主图 */
+  --pos-founder:   center center;   /* 创始人背景 */
+  --pos-land1:     center 42.5%;   /* 过渡大图 - desktop only */
+  --pos-garden1:   center 40%;   /* 菜园上图 */
+  --pos-garden2:   center 38%;   /* 菜园下图 */
+  --pos-market1:   center 20%;   /* 市集上图 - show woman's hands */
+  --pos-market2:   center 15%;   /* 市集下图 - show elderly man upper body */
+  --pos-village1:  center center;   /* 村民上图 */
+  --pos-village2:  center 8%;    /* 村民下图 - shift down to show heads */
+  --pos-room1:     center 33%;   /* 房间上图 */
+  --pos-room2:     center center;   /* 房间下图 */
+  --pos-community: center center;   /* Community主图 */
+  --pos-fireworks: center center;   /* 烟花图 */
+  --pos-music:     center center;   /* 音乐图 */
+  --pos-footer:    center 25%;   /* 页脚背景 — drag down to show upper half of photo */
+
+  /* ┌─────────────────────────────────────────┐
+     │  颜色区 — 改这里换配色                    │
+     └─────────────────────────────────────────┘
+     --color-btn      按钮颜色（改这一个，全站按钮都变）
+     --color-accent   强调色（小标签、价格数字、地图点）
+     --color-bg       主背景色
+     --color-bg2      次背景色（深色区块）
+     --color-text     正文文字颜色
+     --color-muted    次要文字颜色                        */
+
+  --color-btn:    #003023;   /* 按钮 — 深绿 harvest */
+  --color-accent: #83C441;   /* 强调色 — 鲜绿 fresh sprout */
+  --color-bg:     #F6FEF9;   /* 主背景 — morning dew */
+  --color-bg2:    #EBF7EE;   /* 次背景 */
+  --color-dark:   #003023;   /* 深色区块 */
+  --color-text:   #0D2218;   /* 正文颜色 */
+  --color-muted:  #4A6B58;   /* 次要文字 */
+  --color-sage:   #83C441;   /* 小标签 */
+
+  /* ┌─────────────────────────────────────────┐
+     │  字体区 — 改这里换字体                    │
+     └─────────────────────────────────────────┘
+     --font-serif   标题字体（大标题/引用文字）
+     --font-sans    正文字体（导航/按钮/正文段落）  */
+
+  --font-serif: 'Outfit', system-ui, sans-serif;
+  --font-sans:  'Outfit', system-ui, sans-serif;
+
+  /* ┌─────────────────────────────────────────┐
+     │  字号区 — 改这里调整字体大小              │
+     └─────────────────────────────────────────┘
+     单位px，直接改数字即可
+     标题字号用clamp(最小,视口比例,最大)控制响应式
+     只想整体变大/变小：改 --size-body 这一个值  */
+
+  --size-body:    16px;   /* 正文基础字号 */
+  --size-small:   13px;   /* 小字（说明文字/价格注释）*/
+  --size-tiny:    11px;   /* 极小字（标签/版权）*/
+  --size-nav:     18px;   /* 导航logo字号 */
+
+  /* ── 内部映射（不需要改） ── */
+  --cream:    var(--color-bg);
+  --cream2:   var(--color-bg2);
+  --brown:    var(--color-text);
+  --brown-lt: #5C4830;
+  --orange:   var(--color-btn);
+  --sage:     var(--color-sage);
+  --mid:      var(--color-muted);
+  --white:    #FFFFFF;
+  --serif:    var(--font-serif);
+  --sans:     var(--font-sans);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Outfit', system-ui, -apple-system, sans-serif; background:var(--cream); color:var(--brown); font-size:16px; line-height:1.7; overflow-x:hidden; }
+img { display:block; width:100%; object-fit:cover; }
+a { text-decoration:none; color:inherit; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px 48px;
+  transition:background .4s, padding .3s, backdrop-filter .4s;
+}
+nav.scrolled {
+  background:rgba(0,48,35,.18);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  padding:16px 48px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+@media (max-width:900px) {
+  nav { padding:12px 20px; }
+  nav.scrolled {
+    background:rgba(0,48,35,.18);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    padding:10px 20px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+}
+.nav-logo {
+  font-family:'Outfit',system-ui,sans-serif; font-size:18px; font-weight:400;
+  letter-spacing:.1em; color:var(--white);
+  transition:color .4s;
+}
+nav.scrolled .nav-logo { color:var(--white); }
+.nav-apply {
+  font-size:12px; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--white); border:1px solid rgba(255,255,255,.5);
+  padding:9px 22px;
+  transition:all .3s;
+}
+nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5); }
+.nav-apply:hover { background:var(--orange); border-color:var(--orange); color:var(--white) !important; }
+
+/* ── FLOAT CTA ── */
+.float-cta {
+  position:fixed; bottom:28px; right:28px; z-index:99;
+  width:190px; height:190px; border-radius:50%;
+  background:var(--orange); color:var(--white);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  font-size:17px; font-weight:500; letter-spacing:.06em; line-height:1.4;
+  box-shadow:0 8px 28px rgba(10,59,175,.35);
+  transition:transform .25s, box-shadow .25s;
+}
+.float-cta:hover { transform:scale(1.07); box-shadow:0 12px 36px rgba(200,87,42,.5); }
+
+/* ── HERO ── */
+.hero {
+  height:100vh; min-height:620px; position:relative;
+  display:flex; align-items:flex-end;
+  overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:var(--img-hero) var(--pos-hero)/cover no-repeat;
+  transform:scale(1.04);
+  transition:transform 8s ease-out;
+}
+.hero-bg.loaded { transform:scale(1); }
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(175deg, rgba(37,26,12,.15) 0%, rgba(37,26,12,.62) 100%);
+}
+.hero-content {
+  position:relative; z-index:2;
+  padding:0 72px 80px;
+  max-width:760px;
+}
+.hero-eyebrow {
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:rgba(255,255,255,.65); margin-bottom:18px;
+}
+.hero h1 {
+  font-family:'Outfit',system-ui,sans-serif; font-weight:300;
+  font-size:clamp(52px,7.5vw,96px); line-height:1.05;
+  color:var(--white); margin-bottom:20px;
+}
+.hero h1 em { font-style:italic; }
+.hero-sub {
+  font-size:17px; font-weight:300; letter-spacing:.02em;
+  color:rgba(255,255,255,.78); margin-bottom:40px;
+  max-width:480px; line-height:1.65;
+}
+.hero-btn {
+  display:inline-block; background:var(--orange); color:var(--white);
+  padding:15px 42px; font-size:13px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  transition:background .25s, transform .2s;
+}
+.hero-btn:hover { background:#6aaa2e; transform:translateY(-2px); }
+.hero-note {
+  display:block; margin-top:14px;
+  font-size:11px; color:rgba(255,255,255,.45); letter-spacing:.06em;
+}
+
+/* ── SECTION COMMONS ── */
+.section-label {
+  font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--sage); margin-bottom:14px;
+}
+.section-label.light { color:rgba(255,255,255,.45); }
+
+/* ── FOUNDER ── */
+.founder {
+  position:relative; overflow:hidden;
+  min-height:90vh; display:flex; align-items:stretch;
+}
+.founder-bg {
+  position:absolute; inset:0;
+  background:var(--img-founder) var(--pos-founder)/cover no-repeat;
+}
+.founder-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(100deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.12) 52%, rgba(255,255,255,.04) 100%);
+}
+.founder-content {
+  position:relative; z-index:2;
+  padding:0; max-width:520px;
+  align-self:stretch; display:flex; align-items:center;
+  margin-left:520px;
+}
+/* Desktop: frosted glass card, flush top+bottom, no radius */
+.founder-text-card {
+  background:rgba(0,48,35,.48);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-radius:0;
+  padding:120px 64px 120px 72px;
+  height:100%;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.founder-content p {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(15px,1.4vw,20px);
+  font-weight:300; line-height:1.8; color:rgba(255,255,255,1);
+  margin-bottom:1.6em;
+}
+.founder-content p:last-of-type { margin-bottom:0; }
+.founder-sig {
+  margin-top:40px;
+  font-size:13px; color:rgba(255,255,255,.75); letter-spacing:.06em;
+}
+.founder-sig strong { color:rgba(255,255,255,1); font-weight:400; }
+
+/* ── LANDSCAPE BREAK ── */
+.land-break {
+  height:70vh; min-height:420px; position:relative; overflow:hidden;
+}
+.land-break-bg {
+  position:absolute; inset:0;
+  background:var(--img-land1) var(--pos-land1)/cover no-repeat;
+}
+.land-break-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(37,26,12,.5) 0%, transparent 50%);
+}
+.land-break-text {
+  position:absolute; bottom:52px; left:72px;
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(24px,3.5vw,44px);
+  font-weight:300; font-style:italic; color:var(--white); line-height:1.3;
+}
+
+/* ── SCENES ── */
+.scenes { background:var(--cream2); padding:100px 48px; }
+.scenes-header { text-align:center; margin-bottom:72px; }
+.scenes-header h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,46px);
+  font-weight:300; color:var(--brown); margin-top:10px;
+}
+
+/* 每个场景：大图左，文字右；偶数场景反转 */
+.scene-block {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; max-width:1200px; margin:0 auto 80px; align-items:stretch;
+}
+.scene-block:last-child { margin-bottom:0; }
+.scene-block.reverse { direction:rtl; }
+.scene-block.reverse > * { direction:ltr; }
+
+.scene-imgs {
+  display:grid; grid-template-rows:1fr 1fr; height:520px;
+}
+.scene-imgs .img-top,
+.scene-imgs .img-bot {
+  background-size:cover; background-position:center top;
+}
+.scene-text {
+  padding:60px 64px; display:flex; flex-direction:column; justify-content:center;
+  background:var(--white);
+}
+.scene-label-sm {
+  font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--orange); margin-bottom:16px;
+}
+.scene-text h3 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(22px,2.5vw,34px);
+  font-weight:300; color:var(--brown); margin-bottom:18px; line-height:1.3;
+}
+.scene-text p {
+  font-size:14px; color:var(--mid); line-height:1.85;
+}
+
+/* Market scene special: side-by-side portrait layout on desktop + mobile */
+.scene-block.market-scene .scene-imgs {
+  display:grid;
+  grid-template-columns: 1.12fr 1fr;
+  grid-template-rows: 1fr;
+  height:520px;
+  gap:2px;
+  background:#fff;
+}
+.scene-block.market-scene .scene-imgs .img-top,
+.scene-block.market-scene .scene-imgs .img-bot {
+  height:100%;
+}
+@media (max-width:900px) {
+  .scene-block.market-scene .scene-imgs {
+    grid-template-columns: 1.12fr 1fr;
+    grid-template-rows: 1fr;
+    height:260px;
+    gap:2px;
+  }
+  .scene-block.market-scene .scene-imgs .img-top,
+  .scene-block.market-scene .scene-imgs .img-bot {
+    height:100%;
+  }
+}
+.community { background:var(--brown); padding:100px 0; overflow:hidden; }
+.community-inner { max-width:1200px; margin:0 auto; padding:0 48px; }
+.community-inner .section-label { color:rgba(255,255,255,.35); }
+.community-inner h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(30px,4vw,54px);
+  font-weight:300; color:var(--white); line-height:1.2;
+  max-width:560px; margin:12px 0 36px;
+}
+.community-inner > p {
+  font-size:15px; color:rgba(255,255,255,.6); line-height:1.85;
+  max-width:580px; margin-bottom:64px;
+}
+.community-grid {
+  display:grid; grid-template-columns:2fr 1fr 1fr;
+  gap:3px; height:480px;
+}
+.community-grid .c-img {
+  background-size:cover; background-position:center;
+  transition:transform .5s;
+  overflow:hidden;
+}
+.community-grid .c-img:hover { transform:scale(1.03); }
+.c-main { background-image:var(--img-community); background-size:cover; background-position:var(--pos-community); }
+.c-fireworks { background-image:var(--img-fireworks); background-size:cover; background-position:var(--pos-fireworks); }
+.c-music { background-image:var(--img-music); background-size:cover; background-position:var(--pos-music); }
+
+/* ── NOT FOR ── */
+.notfor { background:var(--cream); padding:100px 48px; }
+.notfor-inner { max-width:820px; margin:0 auto; }
+.notfor h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(30px,4vw,52px);
+  font-weight:300; color:var(--brown); margin-bottom:36px; line-height:1.2;
+}
+.notfor-list {
+  border-top:1px solid rgba(37,26,12,.12);
+  margin-bottom:48px;
+}
+.notfor-item {
+  padding:18px 0; border-bottom:1px solid rgba(37,26,12,.12);
+  display:flex; gap:20px; align-items:baseline;
+}
+.notfor-item .dash {
+  color:var(--orange); font-size:18px; flex-shrink:0; line-height:1;
+}
+.notfor-item p { font-size:15px; color:var(--brown-lt); line-height:1.7; }
+.notfor-divider {
+  padding:32px 36px; border-left:3px solid var(--orange);
+  background:rgba(200,87,42,.04);
+}
+.notfor-divider p { font-size:15px; color:var(--mid); line-height:1.85; }
+.notfor-divider strong { color:var(--brown); font-weight:500; }
+
+/* ── RADIAL DISTANCE SVG ── */
+.map-section { background:var(--cream2); padding:100px 48px; }
+.map-inner { max-width:1200px; margin:0 auto; }
+.map-inner h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,44px);
+  font-weight:300; color:var(--brown); margin:12px 0 60px;
+}
+.radial-svg-wrap { width:100%; position:relative; }
+#radial-svg { width:100%; height:auto; display:block; overflow:visible; }
+
+/* 节点label */
+.r-name { font-family:'Outfit',sans-serif; font-size:14px; font-weight:600; fill:#0D2218; }
+.r-dist { font-family:'Outfit',sans-serif; font-size:11px; fill:#4A6B58; }
+.r-desc { font-family:'Outfit',sans-serif; font-size:10.5px; fill:#83C441; }
+
+/* 节点圆点动效 */
+@keyframes dot-pulse {
+  0%,100% { r:5; opacity:1; }
+  50%     { r:6; opacity:.85; }
+}
+.r-dot { animation: dot-pulse 2.5s ease-in-out infinite; }
+
+/* 射선 */
+@keyframes line-draw {
+  from { stroke-dashoffset: var(--dash-len); }
+  to   { stroke-dashoffset: 0; }
+}
+.r-line {
+  stroke-dasharray: var(--dash-len);
+  stroke-dashoffset: var(--dash-len);
+  animation: line-draw .6s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: var(--delay);
+}
+
+/* hover tooltip */
+.r-tooltip {
+  position:absolute; background:#003023; border-radius:8px;
+  padding:12px 14px; pointer-events:none;
+  opacity:0; transition:opacity .18s;
+  z-index:100; width:220px;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.r-tooltip.show { opacity:1; }
+.r-tooltip-img {
+  width:100%; height:auto;
+  border-radius:4px; display:block; margin-bottom:8px;
+  /* no aspect-ratio forced — shows full image at natural ratio */
+}
+.r-tooltip-name { font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:#F6FEF9; }
+.r-tooltip-desc { font-family:'Outfit',sans-serif; font-size:11px; color:rgba(246,254,249,.65); margin-top:3px; line-height:1.5; }
+
+/* Radial line particle flow animation */
+@keyframes particle-flow {
+  0%   { opacity:0; transform:translate(0,0); }
+  20%  { opacity:.9; }
+  100% { opacity:0; }
+}
+.r-particle {
+  position:absolute; width:3px; height:3px; border-radius:50%;
+  background:#83C441; pointer-events:none;
+  animation: particle-flow linear infinite;
+}
+
+@media (max-width:900px) { .map-section { padding:60px 20px; } }
+
+/* ── PRICING ── */
+.pricing { background:var(--brown); padding:100px 48px; }
+.pricing-inner { max-width:960px; margin:0 auto; }
+.pricing-inner .section-label { color:rgba(255,255,255,.35); }
+.pricing-inner h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,44px);
+  font-weight:300; color:var(--white); margin:12px 0 12px;
+}
+.pricing-lead { font-size:15px; color:rgba(255,255,255,.5); margin-bottom:56px; }
+.price-cards { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
+.price-card { background:rgba(255,255,255,.06); padding:44px 40px; }
+.price-card.featured { background:#83C441; }
+.price-badge {
+  display:inline-block; font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.3); color:rgba(255,255,255,.6);
+  padding:4px 12px; margin-bottom:24px;
+}
+.price-card.featured .price-badge { border-color:rgba(255,255,255,.5); color:rgba(255,255,255,.85); }
+.price-tier { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:12px; }
+.price-amount {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(44px,5vw,68px);
+  font-weight:300; color:var(--white); line-height:1; margin-bottom:6px;
+}
+.price-usd { font-size:13px; color:rgba(255,255,255,.4); margin-bottom:28px; }
+.price-includes { list-style:none; }
+.price-includes li {
+  font-size:13px; color:rgba(255,255,255,.65); padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex; gap:10px;
+}
+.price-includes li::before { content:'—'; color:var(--orange); flex-shrink:0; }
+.price-card.featured .price-includes li::before { color:rgba(255,255,255,.6); }
+.price-note {
+  margin-top:40px; padding:24px 28px;
+  background:rgba(255,255,255,.04); border-left:2px solid rgba(255,255,255,.15);
+}
+.price-note p { font-size:12px; color:rgba(255,255,255,.4); line-height:1.8; }
+
+/* ── INCENTIVE ── */
+.incentive { background:var(--cream); padding:100px 48px; }
+.incentive-inner { max-width:820px; margin:0 auto; }
+.incentive h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(26px,3vw,40px);
+  font-weight:300; color:var(--brown); margin:12px 0 28px; line-height:1.3;
+}
+.incentive > .incentive-inner > p {
+  font-size:15px; color:var(--mid); line-height:1.85; margin-bottom:1.5em;
+}
+.incentive-tiers {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:3px;
+  margin:44px 0;
+}
+.tier-card { background:var(--cream2); padding:28px 24px; }
+.tier-card.top { background:#83C441; }
+.tier-views { font-family:'Outfit',system-ui,sans-serif; font-size:18px; color:var(--orange); margin-bottom:8px; font-weight:300; }
+.tier-card.top .tier-views { color:var(--orange); }
+.tier-refund { font-size:22px; font-weight:500; color:var(--brown); }
+.tier-card.top .tier-refund { color:var(--white); }
+.tier-label { font-size:11px; color:var(--mid); margin-top:4px; }
+.tier-card.top .tier-label { color:rgba(255,255,255,.5); }
+.incentive-fine {
+  font-size:12px; color:var(--mid); line-height:1.8;
+  padding:20px 24px; border-left:2px solid rgba(37,26,12,.12);
+}
+
+/* ── HOW TO APPLY ── */
+.apply { background:var(--cream2); padding:100px 48px; }
+.apply-inner { max-width:900px; margin:0 auto; }
+.apply-inner h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,44px);
+  font-weight:300; color:var(--brown); margin:12px 0 60px;
+}
+.apply-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:48px; margin-bottom:56px; }
+.apply-step { }
+.step-num {
+  font-family:'Outfit',system-ui,sans-serif; font-size:56px; font-weight:300;
+  color:rgba(37,26,12,.12); line-height:1; margin-bottom:20px;
+}
+.apply-step h3 { font-size:15px; font-weight:500; color:var(--brown); margin-bottom:10px; }
+.apply-step p { font-size:13px; color:var(--mid); line-height:1.75; }
+.apply-cta-wrap { text-align:center; }
+.apply-cta {
+  display:inline-block; background:#83C441; color:var(--white);
+  padding:18px 56px; font-size:13px; font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase;
+  transition:background .25s, transform .2s;
+}
+.apply-cta:hover { background:#6aaa2e; transform:translateY(-2px); }
+.apply-sub { margin-top:14px; font-size:12px; color:var(--mid); letter-spacing:.06em; }
+
+/* ── FAQ ── */
+.faq { background:var(--cream); padding:100px 48px; }
+.faq-inner { max-width:820px; margin:0 auto; }
+.faq-inner h2 {
+  font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,44px);
+  font-weight:300; color:var(--brown); margin:12px 0 56px;
+}
+.faq-item { border-top:1px solid rgba(37,26,12,.1); }
+.faq-item:last-child { border-bottom:1px solid rgba(37,26,12,.1); }
+.faq-q {
+  width:100%; background:none; border:none; cursor:pointer;
+  text-align:left; padding:22px 0;
+  display:flex; justify-content:space-between; align-items:center; gap:20px;
+  font-family:var(--sans); font-size:15px; font-weight:400; color:var(--brown);
+}
+.faq-q .faq-arrow {
+  width:20px; height:20px; flex-shrink:0;
+  border:1px solid rgba(37,26,12,.25); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; color:var(--mid);
+  transition:transform .3s, background .2s;
+}
+.faq-item.open .faq-arrow { transform:rotate(45deg); background:var(--orange); border-color:var(--orange); color:var(--white); }
+.faq-a {
+  max-height:0; overflow:hidden;
+  transition:max-height .4s ease, padding .3s;
+}
+.faq-item.open .faq-a { max-height:400px; padding-bottom:22px; }
+.faq-a p { font-size:14px; color:var(--mid); line-height:1.85; }
+.faq-a p + p { margin-top:12px; }
+
+/* ── FOOTER ── */
+footer {
+  position:relative; overflow:hidden;
+  padding:100px 72px 64px; min-height:380px;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.footer-bg {
+  position:absolute; inset:0;
+  background:var(--img-footer) var(--pos-footer)/cover no-repeat;
+}
+.footer-overlay {
+  position:absolute; inset:0;
+  background:rgba(0,0,0,0);
+  /* overlay removed per request */
+}
+.footer-top { position:relative; z-index:2; margin-bottom:60px; }
+.footer-logo {
+  font-family:'Outfit',system-ui,sans-serif; font-size:28px; font-weight:300;
+  color:var(--white); letter-spacing:.08em; margin-bottom:12px;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.footer-tagline { font-size:13px; color:rgba(255,255,255,.75); letter-spacing:.08em; text-shadow:0 1px 8px rgba(0,0,0,.5); }
+.footer-bottom {
+  position:relative; z-index:2;
+  display:flex; justify-content:space-between; align-items:flex-end;
+  border-top:1px solid rgba(255,255,255,.55); padding-top:28px;
+}
+.footer-contact { }
+.footer-contact a {
+  display:block; font-size:14px; color:rgba(255,255,255,.9);
+  margin-bottom:6px; letter-spacing:.04em;
+  transition:color .2s;
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
+}
+.footer-contact a:hover { color:var(--orange); }
+.footer-legal {
+  font-size:11px; color:rgba(255,255,255,.55); text-align:right; line-height:1.8;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
+  /* avoid overlap with float-cta (190px wide + 28px right = ~220px from right) */
+  margin-right:230px;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .hero-content { padding:0 28px 60px; }
+  /* Mobile founder: remove photo bg, use solid green, text becomes its own section */
+  .founder { min-height:unset; display:block; }
+  .founder-bg { display:none; }
+  .founder-overlay { display:none; }
+  .founder-content { padding:60px 28px; background:#003023; max-width:100%; margin-left:0 !important; display:block !important; align-self:auto !important; height:auto !important; }
+  .founder-text-card {
+    background:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    border-radius:0 !important;
+    padding:0 !important;
+    height:auto !important;
+  }
+  .founder-content p { color:rgba(255,255,255,.88) !important; font-size:16px !important; }
+  .founder-sig { color:rgba(255,255,255,.55) !important; }
+  .founder-sig strong { color:rgba(255,255,255,.8) !important; }
+  .land-break-text { left:28px; bottom:36px; }
+  .land-break { height:60vw; min-height:200px; }
+  .land-break-bg { background-position:center 30% !important; }
+  .scenes { padding:72px 24px; }
+  .scene-block { grid-template-columns:1fr; }
+  .scene-block.reverse { direction:ltr; }
+  .scene-imgs { height:280px; }
+  .scene-text { padding:36px 32px; }
+  .community-inner { padding:0 24px; }
+  .community-grid { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; height:420px; }
+  .c-main { grid-column:1/-1; }
+  .notfor { padding:72px 24px; }
+  .map-section { padding:72px 24px; }
+  .map-section { padding:72px 24px; }
+  .pricing { padding:72px 24px; }
+  .price-cards { grid-template-columns:1fr; }
+  .incentive { padding:72px 24px; }
+  .incentive-tiers { grid-template-columns:1fr 1fr; }
+  .apply { padding:72px 24px; }
+  .apply-steps { grid-template-columns:1fr; gap:32px; }
+  .faq { padding:72px 24px; }
+  footer { padding:72px 28px 48px; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:20px; }
+  .footer-legal { text-align:left; margin-right:0; }
+  .float-cta { width:90px; height:90px; font-size:12px; bottom:18px; right:14px; line-height:1.3; }
+  /* Mobile footer: restore overlay and original image position */
+  .footer-overlay { background:rgba(37,26,12,.55) !important; }
+  .footer-bg { background-position:center center !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">The Magpie Experiment</a>
+  <a href="#apply-section" class="nav-apply">Apply</a>
+</nav>
+
+<!-- ══ FLOAT CTA ══ -->
+<a href="#apply-section" class="float-cta">Apply<br>to Stay</a>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Zhanqiao Township · Linxiang · Hunan · China</p>
+    <h1>The Magpie<br><em>Experiment</em></h1>
+    <p class="hero-sub">A village in Hunan, China.<br>Unfiltered.</p>
+    <a href="#apply-section" class="hero-btn">Apply to Stay →</a>
+    <span class="hero-note">※ Current cohort has limited spots. Applications reviewed individually.</span>
+  </div>
+</section>
+
+<!-- ══ FOUNDER ══ -->
+<section class="founder">
+  <div class="founder-bg"></div>
+  <div class="founder-overlay"></div>
+  <div class="founder-content reveal">
+    <div class="founder-text-card">
+      <p class="section-label" style="color:rgba(255,255,255,.5)">Why this exists</p>
+      <p>I built this guesthouse with my own hands in a village most Chinese people have never heard of.</p>
+      <p>It is, of course, also a business.<br>But more importantly, it gives people the chance to slowly discover a more real China through everyday life.</p>
+      <p>I've watched China get explained, flattened, and packaged for foreign audiences for years — the skylines, the tech, the approved narratives. What rarely makes it through is the other 90% of the country: the villages, the markets, the Tuesday mornings where nothing particular happens and everything is quietly real.</p>
+      <p>I want to change that. Not by telling you what to think. But by giving you a place to stay long enough to see for yourself.</p>
+      <p>This is not a hotel. It's not a tour.<br>It's an experiment — and you're part of it.</p>
+      <p class="founder-sig">— <strong>Zayn</strong>, founder &amp; builder &nbsp;·&nbsp; @zayn66888 on TikTok</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LANDSCAPE BREAK 1 ══ -->
+<div class="land-break">
+  <div class="land-break-bg"></div>
+  <div class="land-break-overlay"></div>
+  <p class="land-break-text">No packaging. No performance.<br>Just the place.</p>
+</div>
+
+<!-- ══ SCENES ══ -->
+<section class="scenes">
+  <div class="scenes-header reveal">
+    <p class="section-label">What a month here looks like</p>
+    <h2>Four scenes from daily life</h2>
+  </div>
+
+  <!-- Garden -->
+  <div class="scene-block reveal">
+    <div class="scene-imgs">
+      <div class="img-top" style="background-image:var(--img-garden1); background-size:cover; background-position:var(--pos-garden1)"></div>
+      <div class="img-bot" style="background-image:var(--img-garden2); background-size:cover; background-position:var(--pos-garden2)"></div>
+    </div>
+    <div class="scene-text">
+      <p class="scene-label-sm">Garden</p>
+      <h3>The vegetables on your plate came from twenty meters away.</h3>
+      <p>You can harvest them yourself, or help plant the next batch. The seasons here are not a metaphor — they run the kitchen. Whatever is ready is what you eat. Nothing is shipped in. Everything has a name.</p>
+    </div>
+  </div>
+
+  <!-- Market -->
+  <div class="scene-block reverse market-scene reveal">
+    <div class="scene-imgs">
+      <div class="img-top" style="background-image:var(--img-market1); background-size:cover; background-position:var(--pos-market1)"></div>
+      <div class="img-bot" style="background-image:var(--img-market2); background-size:cover; background-position:var(--pos-market2)"></div>
+    </div>
+    <div class="scene-text">
+      <p class="scene-label-sm">Market</p>
+      <h3>The town market opens every day. Five kilometers away.</h3>
+      <p>Vendors who've known each other for decades. Prices written on cardboard. No English anywhere. Bring a translation app, or just point and smile. The market doesn't perform for visitors — it just runs, the way it always has.</p>
+    </div>
+  </div>
+
+  <!-- Village -->
+  <div class="scene-block reveal">
+    <div class="scene-imgs">
+      <div class="img-top" style="background-image:var(--img-village1); background-size:cover; background-position:var(--pos-village1)"></div>
+      <div class="img-bot" style="background-image:var(--img-village2); background-size:cover; background-position:var(--pos-village2)"></div>
+    </div>
+    <div class="scene-text">
+      <p class="scene-label-sm">Neighbors</p>
+      <h3>The people next door are not performers of rural life.</h3>
+      <p>They farm, argue, cook, and watch TV — or try to, until the remote gets accidentally set to a menu they can't navigate back from. If you're good with your hands, you'll find yourself useful here. A satellite dish that lost its signal. A roof tile that shifted after rain. An elderly woman holding out her phone, asking you to help her order a washing machine online.</p>
+      <p style="margin-top:14px">You won't be paid for any of this. What you'll get is a meal that took three hours to make, a thumbs-up delivered with complete sincerity, and the specific feeling of being genuinely needed somewhere you didn't expect.</p>
+    </div>
+  </div>
+
+  <!-- Room -->
+  <div class="scene-block reverse reveal">
+    <div class="scene-imgs">
+      <div class="img-top" style="background-image:var(--img-room1); background-size:cover; background-position:var(--pos-room1)"></div>
+      <div class="img-bot" style="background-image:var(--img-room2); background-size:cover; background-position:var(--pos-room2)"></div>
+    </div>
+    <div class="scene-text">
+      <p class="scene-label-sm">Your space</p>
+      <h3>Stable WiFi. Quiet mornings. Zero tourist infrastructure.</h3>
+      <p>The kind of footage nobody else has — because nobody else stayed. The house has twelve rooms, a shared kitchen, a reading room with more books than you'll finish, and a view that makes it hard to sit down and work. You'll sit down anyway. The mountains will still be there.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMMUNITY ══ -->
+<section class="community">
+  <div class="community-inner">
+    <p class="section-label light">The other side of this</p>
+    <h2>This isn't only about solitude.</h2>
+    <p>It's also about the people in the house with you. Each cohort brings together a small group — creators, filmmakers, writers, photographers — people who are curious about the world and practiced at expressing it. Think of it less like a guesthouse, more like the best hostel you've ever stayed in: the kind where you end up talking until 2am, collaborating on something you didn't plan, and leaving with three friendships you didn't expect. The village provides the material. The people in the house provide the energy.</p>
+  </div>
+  <div class="community-grid" style="margin-top:48px">
+    <div class="c-img c-main"></div>
+    <div class="c-img c-fireworks"></div>
+    <div class="c-img c-music"></div>
+  </div>
+</section>
+
+<!-- ══ NOT FOR ══ -->
+<section class="notfor">
+  <div class="notfor-inner reveal">
+    <p class="section-label">Honest disclosure</p>
+    <h2>This place is not for most people.</h2>
+    <div class="notfor-list">
+      <div class="notfor-item"><span class="dash">—</span><p>There is no room service. No concierge. No curated experience.</p></div>
+      <div class="notfor-item"><span class="dash">—</span><p>Mobile signal is weak in parts of the property.</p></div>
+      <div class="notfor-item"><span class="dash">—</span><p>The nearest city is over an hour away.</p></div>
+      <div class="notfor-item"><span class="dash">—</span><p>Your neighbors will not speak English.</p></div>
+      <div class="notfor-item"><span class="dash">—</span><p>If you're looking for a comfortable introduction to China, this is the wrong address.</p></div>
+    </div>
+    <div class="notfor-divider">
+      <p>This place is for a specific kind of person: someone who finds a bad signal <strong>liberating</strong>, who considers inconvenience a form of <strong>access</strong>, who wants to say — honestly — <em>"I lived in a Chinese village for a month, and here's what I actually found."</em></p>
+      <p style="margin-top:14px">If that's you, read on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RADIAL DISTANCE ══ -->
+<section class="map-section">
+  <div class="map-inner">
+    <p class="section-label">Where, exactly</p>
+    <h2>Zhanqiao Township, Linxiang<br><em>Hunan Province, China</em></h2>
+
+    <div class="radial-svg-wrap reveal">
+      <!-- tooltip浮层 -->
+      <div class="r-tooltip" id="rTip">
+        <img class="r-tooltip-img" id="rTipImg" src="" alt="" style="display:none">
+        <div class="r-tooltip-name" id="rTipName"></div>
+        <div class="r-tooltip-desc" id="rTipDesc"></div>
+      </div>
+
+      <!--
+        中心点 cx=820 cy=500（偏右）
+        viewBox="0 0 1100 1000"
+        各节点坐标用极坐标计算：
+          x = cx + len*cos(angle_rad)
+          y = cy + len*sin(angle_rad)
+        CSS角度0°=东，但地理N对应SVG -90°
+        实际角度（地理→SVG rad）：
+          武汉   NE  → -52°  → cos=-0.616,sin=-0.788
+          武当山  N   → -90°  → cos=0,sin=-1
+          三峡   NNW → -108° → cos=-0.309,sin=-0.951
+          神农架  NW  → -128° → cos=-0.616,sin=-0.788  (same as wuhan but left side)
+          张家界  W   → 180°  → cos=-1,sin=0
+          凤凰   WSW → 148°  → cos=-0.848,sin=0.530
+          岳阳   SW  → 128°  → cos=-0.616,sin=0.788
+          长沙   SSW → 105°  → cos=-0.259,sin=0.966
+          衡山   SSE → 75°   → cos=0.259,sin=0.966
+          通城   SE  → 42°   → cos=0.743,sin=0.669
+          市集   ENE → -18°  → cos=0.951,sin=-0.309
+      -->
+      <svg id="radial-svg" viewBox="0 0 1100 1000" xmlns="http://www.w3.org/2000/svg">
+        <!-- 中心脉冲圈 -->
+        <circle cx="820" cy="500" r="48" fill="#003023" opacity=".08">
+          <animate attributeName="r" values="48;80;48" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".1;0;.1" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="820" cy="500" r="48" fill="#003023" opacity=".12">
+          <animate attributeName="r" values="48;65;48" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".14;0;.14" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- 中心核 -->
+        <circle cx="820" cy="500" r="48" fill="#003023"/>
+        <text x="820" y="495" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="600" fill="#F6FEF9" letter-spacing="2">ZHANQIAO</text>
+        <text x="820" y="510" text-anchor="middle" font-family="Outfit,sans-serif" font-size="8" fill="#83C441" letter-spacing="1.5">YOU ARE HERE</text>
+
+        <!-- ── 武汉 NE, len=360 ──
+             x=820+360*cos(-52°)=820+360*0.616=820+222=1042
+             y=500+360*sin(-52°)=500+360*(-0.788)=500-284=216 -->
+        <line x1="820" y1="500" x2="1042" y2="216"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="440" stroke-dashoffset="440" class="r-line" style="--dash-len:440;--delay:0s"/>
+        <circle cx="1042" cy="216" r="6" fill="#83C441" class="r-dot"
+          data-name="Wuhan" data-dist="2.5 hrs · major city"
+          data-desc="Hubei's capital. Yellow Crane Tower, East Lake, vibrant night food scene."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107504/wuhan_ilhm8s.jpg"/>
+        <text x="1052" y="211" class="r-name">Wuhan</text>
+        <text x="1052" y="226" class="r-dist">2.5 hrs · major city</text>
+
+        <!-- ── 武当山 N, len=400 ──
+             x=820+400*cos(-90°)=820+0=820
+             y=500+400*sin(-90°)=500-400=100 -->
+        <line x1="820" y1="500" x2="820" y2="100"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="400" stroke-dashoffset="400" class="r-line" style="--dash-len:400;--delay:.08s"/>
+        <circle cx="820" cy="100" r="6" fill="#83C441" class="r-dot"
+          data-name="Wudang Mountains" data-dist="5.5 hrs · UNESCO heritage"
+          data-desc="Sacred Taoist mountain. Ancient temples, martial arts birthplace, mist-wrapped peaks."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/wudangshan_vq6tcv.jpg"/>
+        <text x="830" y="95" class="r-name">Wudang Mts.</text>
+        <text x="830" y="110" class="r-dist">5.5 hrs · UNESCO heritage</text>
+
+        <!-- ── 三峡 NNW -108°, len=370 ──
+             x=820+370*cos(-108°)=820+370*(-0.309)=820-114=706
+             y=500+370*sin(-108°)=500+370*(-0.951)=500-352=148 -->
+        <line x1="820" y1="500" x2="706" y2="148"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="385" stroke-dashoffset="385" class="r-line" style="--dash-len:385;--delay:.15s"/>
+        <circle cx="706" cy="148" r="6" fill="#83C441" class="r-dot"
+          data-name="Three Gorges" data-dist="4 hrs · Yangtze River"
+          data-desc="Dramatic Yangtze gorges. The world's largest dam. Boat cruises through towering cliffs."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/shanxia_c9dty5.jpg"/>
+        <text x="696" y="143" text-anchor="end" class="r-name">Three Gorges</text>
+        <text x="696" y="158" text-anchor="end" class="r-dist">4 hrs · Yangtze River</text>
+
+        <!-- ── 神农架 NW -132°, len=350 ──
+             x=820+350*cos(-132°)=820+350*(-0.669)=820-234=586
+             y=500+350*sin(-132°)=500+350*(-0.743)=500-260=240 -->
+        <line x1="820" y1="500" x2="586" y2="240"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="370" stroke-dashoffset="370" class="r-line" style="--dash-len:370;--delay:.22s"/>
+        <circle cx="586" cy="240" r="6" fill="#83C441" class="r-dot"
+          data-name="Shennongjia" data-dist="5 hrs · primeval forest"
+          data-desc="UNESCO Biosphere. Old-growth forest, rare wildlife, cool highland escape from summer heat."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/shennongjia_ym3ycx.jpg"/>
+        <text x="576" y="235" text-anchor="end" class="r-name">Shennongjia</text>
+        <text x="576" y="250" text-anchor="end" class="r-dist">5 hrs · primeval forest</text>
+
+        <!-- ── 张家界 W -175°, len=380 ──
+             x=820+380*cos(-175°)=820+380*(-0.996)=820-378=442
+             y=500+380*sin(-175°)=500+380*(-0.087)=500-33=467 -->
+        <line x1="820" y1="500" x2="442" y2="467"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="380" stroke-dashoffset="380" class="r-line" style="--dash-len:380;--delay:.3s"/>
+        <circle cx="442" cy="467" r="6" fill="#83C441" class="r-dot"
+          data-name="Zhangjiajie" data-dist="4 hrs · Avatar Mountains"
+          data-desc="The real Avatar. Thousands of sandstone pillars, glass bridge, cable cars into the clouds."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107505/zhangjiajie_dgjkie.jpg"/>
+        <text x="432" y="462" text-anchor="end" class="r-name">Zhangjiajie</text>
+        <text x="432" y="477" text-anchor="end" class="r-dist">4 hrs · Avatar Mountains</text>
+
+        <!-- ── 凤凰 SW 145°, len=400 ──
+             x=820+400*cos(145°)=820+400*(-0.819)=820-328=492
+             y=500+400*sin(145°)=500+400*(0.574)=500+230=730 -->
+        <line x1="820" y1="500" x2="492" y2="730"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="420" stroke-dashoffset="420" class="r-line" style="--dash-len:420;--delay:.38s"/>
+        <circle cx="492" cy="730" r="6" fill="#83C441" class="r-dot"
+          data-name="Fenghuang Ancient Town" data-dist="5 hrs · ancient town"
+          data-desc="China's best-preserved Ming-dynasty town. River walks, stilted houses, Miao minority culture."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/fenghuangguchen_j6kfgx.jpg"/>
+        <text x="482" y="725" text-anchor="end" class="r-name">Fenghuang</text>
+        <text x="482" y="740" text-anchor="end" class="r-dist">5 hrs · ancient town</text>
+
+        <!-- ── 岳阳 SW 122°, len=290 ──
+             x=820+290*cos(122°)=820+290*(-0.530)=820-154=666
+             y=500+290*sin(122°)=500+290*(0.848)=500+246=746 -->
+        <line x1="820" y1="500" x2="666" y2="746"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="300" stroke-dashoffset="300" class="r-line" style="--dash-len:300;--delay:.46s"/>
+        <circle cx="666" cy="746" r="6" fill="#83C441" class="r-dot"
+          data-name="Yueyang" data-dist="60 km · Dongting Lake"
+          data-desc="Yueyang Tower overlooks Dongting Lake — China's second-largest freshwater lake. One hour away."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107504/yueyang_k3v46m.jpg"/>
+        <text x="656" y="741" text-anchor="end" class="r-name">Yueyang</text>
+        <text x="656" y="756" text-anchor="end" class="r-dist">60 km · Dongting Lake</text>
+
+        <!-- ── 长沙 SSW 108°, len=360 ──
+             x=820+360*cos(108°)=820+360*(-0.309)=820-111=709
+             y=500+360*sin(108°)=500+360*(0.951)=500+342=842 -->
+        <line x1="820" y1="500" x2="709" y2="842"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="365" stroke-dashoffset="365" class="r-line" style="--dash-len:365;--delay:.54s"/>
+        <circle cx="709" cy="842" r="6" fill="#83C441" class="r-dot"
+          data-name="Changsha" data-dist="2 hrs · HSR + airport"
+          data-desc="Hunan's capital. IFS mall, street food paradise, Orange Isle. High-speed rail to anywhere."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/changsha_olsym7.jpg"/>
+        <text x="699" y="837" text-anchor="end" class="r-name">Changsha</text>
+        <text x="699" y="852" text-anchor="end" class="r-dist">2 hrs · HSR + airport</text>
+
+        <!-- ── 衡山 SSE 77°, len=350 ──
+             x=820+350*cos(77°)=820+350*(0.225)=820+79=899
+             y=500+350*sin(77°)=500+350*(0.974)=500+341=841 -->
+        <line x1="820" y1="500" x2="899" y2="841"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="355" stroke-dashoffset="355" class="r-line" style="--dash-len:355;--delay:.62s"/>
+        <circle cx="899" cy="841" r="6" fill="#83C441" class="r-dot"
+          data-name="Mt. Heng (Nanyue)" data-dist="3.5 hrs · sacred mountain"
+          data-desc="One of China's five sacred mountains. Ancient temples up a forested ridge, pilgrims year-round."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776107503/hengshan_nzu1br.jpg"/>
+        <text x="909" y="836" class="r-name">Mt. Heng</text>
+        <text x="909" y="851" class="r-dist">3.5 hrs · sacred mountain</text>
+
+        <!-- ── 通城 SE 40°, len=230 ──
+             x=820+230*cos(40°)=820+230*(0.766)=820+176=996
+             y=500+230*sin(40°)=500+230*(0.643)=500+148=648 -->
+        <line x1="820" y1="500" x2="996" y2="648"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="240" stroke-dashoffset="240" class="r-line" style="--dash-len:240;--delay:.70s"/>
+        <circle cx="996" cy="648" r="6" fill="#83C441" class="r-dot"
+          data-name="Tongcheng" data-dist="20 min · nearest town"
+          data-desc="Your nearest county town. Cinema, supermarket, cafés, banks. Everything a city has, quieter."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776169407/tongcheng_vf2jtx.jpg"/>
+        <text x="1006" y="643" class="r-name">Tongcheng</text>
+        <text x="1006" y="658" class="r-dist">20 min · nearest town</text>
+
+        <!-- ── 市集 ENE -20°, len=180 ──
+             x=820+180*cos(-20°)=820+180*(0.940)=820+169=989
+             y=500+180*sin(-20°)=500+180*(-0.342)=500-62=438 -->
+        <line x1="820" y1="500" x2="989" y2="438"
+          stroke="url(#lg1)" stroke-width="1.2"
+          stroke-dasharray="190" stroke-dashoffset="190" class="r-line" style="--dash-len:190;--delay:.78s"/>
+        <circle cx="989" cy="438" r="6" fill="#83C441" class="r-dot"
+          data-name="Town Market" data-dist="5 km · daily"
+          data-desc="Open every morning. Vendors, fresh produce, cardboard price tags. No English needed."
+          data-img="https://res.cloudinary.com/dubrdum4z/image/upload/v1776094380/IMG-05-3_fzcf9g.jpg"/>
+        <text x="999" y="433" class="r-name">Town Market</text>
+        <text x="999" y="448" class="r-dist">5 km · daily</text>
+
+        <!-- 渐变定义 + 粒子滤镜 -->
+        <defs>
+          <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#003023" stop-opacity=".6"/>
+            <stop offset="100%" stop-color="#83C441" stop-opacity=".8"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- 粒子流：从中心沿每条射线辐射 -->
+        <!-- 武汉 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.2s" repeatCount="indefinite" begin="0s">
+            <mpath href="#p-wuhan"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" repeatCount="indefinite" begin="0s"/>
+        </circle>
+        <circle r="2" fill="#a8e060" opacity=".7">
+          <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.7s">
+            <mpath href="#p-wuhan"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;.8;.8;0" dur="2.2s" repeatCount="indefinite" begin="0.7s"/>
+        </circle>
+        <!-- 武当山 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.2s">
+            <mpath href="#p-wudang"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.5s" repeatCount="indefinite" begin="0.2s"/>
+        </circle>
+        <!-- 三峡 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.3s" repeatCount="indefinite" begin="0.4s">
+            <mpath href="#p-sanxia"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.3s" repeatCount="indefinite" begin="0.4s"/>
+        </circle>
+        <!-- 神农架 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.6s">
+            <mpath href="#p-shennongjia"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" begin="0.6s"/>
+        </circle>
+        <!-- 张家界 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.3s">
+            <mpath href="#p-zjj"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.6s" repeatCount="indefinite" begin="0.3s"/>
+        </circle>
+        <!-- 凤凰 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.8s" repeatCount="indefinite" begin="0.5s">
+            <mpath href="#p-fenghuang"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.8s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+        <!-- 岳阳 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.1s" repeatCount="indefinite" begin="0.9s">
+            <mpath href="#p-yueyang"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.1s" repeatCount="indefinite" begin="0.9s"/>
+        </circle>
+        <!-- 长沙 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.1s">
+            <mpath href="#p-changsha"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" begin="0.1s"/>
+        </circle>
+        <!-- 衡山 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="2.3s" repeatCount="indefinite" begin="0.8s">
+            <mpath href="#p-hengshan"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2.3s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <!-- 通城 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.4s">
+            <mpath href="#p-tongcheng"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite" begin="0.4s"/>
+        </circle>
+        <!-- 市集 -->
+        <circle r="2.5" fill="#83C441" opacity=".9" filter="url(#glow)">
+          <animateMotion dur="1.6s" repeatCount="indefinite" begin="0.2s">
+            <mpath href="#p-market"/>
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
+        </circle>
+
+        <!-- 粒子路径 path定义（隐形） -->
+        <path id="p-wuhan"      d="M820,500 L1042,216" fill="none"/>
+        <path id="p-wudang"     d="M820,500 L820,100"  fill="none"/>
+        <path id="p-sanxia"     d="M820,500 L706,148"  fill="none"/>
+        <path id="p-shennongjia" d="M820,500 L586,240" fill="none"/>
+        <path id="p-zjj"        d="M820,500 L442,467"  fill="none"/>
+        <path id="p-fenghuang"  d="M820,500 L492,730"  fill="none"/>
+        <path id="p-yueyang"    d="M820,500 L666,746"  fill="none"/>
+        <path id="p-changsha"   d="M820,500 L709,842"  fill="none"/>
+        <path id="p-hengshan"   d="M820,500 L899,841"  fill="none"/>
+        <path id="p-tongcheng"  d="M820,500 L996,648"  fill="none"/>
+        <path id="p-market"     d="M820,500 L989,438"  fill="none"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="pricing">
+  <div class="pricing-inner">
+    <p class="section-label light">The arrangement</p>
+    <h2>This is not a nightly rate.</h2>
+    <p class="pricing-lead">It's a period. Choose the one that fits where you are.</p>
+    <div class="price-cards">
+      <div class="price-card reveal">
+        <span class="price-badge">Entry period</span>
+        <p class="price-tier">14-Day Residency</p>
+        <p class="price-amount">¥2,800</p>
+        <p class="price-usd">~$390 USD</p>
+        <ul class="price-includes">
+          <li>Private room, 14 nights</li>
+          <li>Shared kitchen, fully equipped</li>
+          <li>Garden access & market runs</li>
+          <li>Village life, unfiltered</li>
+        </ul>
+      </div>
+      <div class="price-card featured reveal">
+        <span class="price-badge">Recommended</span>
+        <p class="price-tier">30-Day Residency</p>
+        <p class="price-amount">¥3,800</p>
+        <p class="price-usd">~$530 USD</p>
+        <ul class="price-includes">
+          <li>Private room, 30 nights</li>
+          <li>Everything above</li>
+          <li>Long enough to stop being a visitor</li>
+          <li>A complete cycle — one season</li>
+        </ul>
+      </div>
+    </div>
+    <div class="price-note reveal">
+      <p>Both periods are priced as a whole, not divided by night. Early departure does not change the total. Meals are not included; the shared kitchen is fully equipped. Chef-cooked meals using local ingredients are available on request at extra cost. Maximum 13 guests per cohort across 12 rooms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INCENTIVE ══ -->
+<section class="incentive">
+  <div class="incentive-inner reveal">
+    <p class="section-label">The content part — read carefully</p>
+    <h2>I'm not paying you<br>to say China is great.</h2>
+    <p>I'm not asking you to say anything at all.</p>
+    <p>What I believe is this: if you spend a real month here, you'll have something worth sharing — something most creators will never have access to. To apply, you'll need to share your TikTok profile and at least one recent piece of work. This isn't about follower count. It's about whether you actually make things.</p>
+    <p>If you choose to post about your time here — honestly, without a required angle — and you enable TikTok's content disclosure label and tag @zayn66888:</p>
+    <div class="incentive-tiers">
+      <div class="tier-card">
+        <div class="tier-views">5k – 20k views</div>
+        <div class="tier-refund">¥300</div>
+        <div class="tier-label">refund</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-views">20k – 100k views</div>
+        <div class="tier-refund">¥500</div>
+        <div class="tier-label">refund</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-views">100k – 1M views</div>
+        <div class="tier-refund">¥800</div>
+        <div class="tier-label">refund</div>
+      </div>
+      <div class="tier-card top">
+        <div class="tier-views">1M+ views</div>
+        <div class="tier-refund">Full</div>
+        <div class="tier-label">full refund</div>
+      </div>
+    </div>
+    <div class="incentive-fine">
+      No scripts. No required framing. Positive, critical, or complicated — all of it serves the same purpose: more people seeing a China that wasn't produced for them. That's the whole point of this experiment. · Views are verified at the 30-day mark after posting. One video per stay counts toward the refund.
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW TO APPLY ══ -->
+<section class="apply" id="apply-section">
+  <div class="apply-inner">
+    <p class="section-label">How to apply</p>
+    <h2>Three steps.<br>Not every application is accepted.</h2>
+    <div class="apply-steps">
+      <div class="apply-step reveal">
+        <div class="step-num">01</div>
+        <h3>Fill in the application</h3>
+        <p>Tell us who you are, what you make, and when you want to come. Share your TikTok or social media profile — we want to see the work, not the follower count.</p>
+      </div>
+      <div class="apply-step reveal">
+        <div class="step-num">02</div>
+        <h3>We review and respond</h3>
+        <p>We're looking for people who are genuinely curious, not just looking for cheap accommodation. We read every application and respond within a few days.</p>
+      </div>
+      <div class="apply-step reveal">
+        <div class="step-num">03</div>
+        <h3>Confirm via WhatsApp</h3>
+        <p>If accepted, we connect on WhatsApp to confirm dates, answer questions, and sort logistics. Simple and direct.</p>
+      </div>
+    </div>
+    <div class="apply-cta-wrap reveal">
+      <!-- ↓↓ 把这里的href替换成你的Tally表单链接 ↓↓ -->
+      <a href="https://tally.so/r/YOUR_FORM_ID" target="_blank" class="apply-cta">Submit your application →</a>
+      <p class="apply-sub">Applications reviewed on a rolling basis · Spots are limited by design</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq">
+  <div class="faq-inner">
+    <p class="section-label">Common questions</p>
+    <h2>FAQ</h2>
+
+    <div class="faq-item">
+      <button class="faq-q">Do I need a visa?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>Citizens of 50+ countries can enter China visa-free for up to 30 days (as of 2026). US citizens typically need an L-visa, which has been simplified — no longer requires proof of itinerary, hotel bookings, or return tickets. Check the latest policy for your country before applying.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Is the 14-day stay suitable for a first visit to China?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>Honestly, probably not. If you haven't been to China before, you'll likely want to move around and see the cities first. This place works best as a second chapter — after you've seen the skylines, and you want something else.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What's the WiFi and signal situation?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>Stable broadband WiFi in the main building — reliable enough for video calls and uploads. Mobile signal is weaker outdoors and in parts of the property. Plan accordingly. Some people find this a feature rather than a bug.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can I come with a partner or friend?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>Yes. One room is a twin. Maximum 13 guests per cohort across 12 rooms. If you're coming as a pair, mention it in your application.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What language do the villagers speak?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>Mandarin and local Hunanese dialect. Very little English. A translation app helps enormously. Struggling to communicate is genuinely part of the experience — and usually ends in laughter.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What's nearby — is there anything to do outside the property?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>The daily market is 5km away. Tongcheng, the nearest county town (in Hubei, 20 minutes by car), has a cinema, large supermarkets, cafés, bars, restaurants, and banks — everything a city has, at a quieter scale. Yueyang, with its famous tower and Dongting Lake, is 60km away. Changsha is two hours. You won't be stranded.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What if I want to leave before my period ends?<span class="faq-arrow">+</span></button>
+      <div class="faq-a"><p>You're free to leave whenever you want. The period is priced as a whole, so early departure doesn't change the total cost. This is stated clearly in the application — we're not trying to trap anyone, we just need the structure to be economically workable.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-bg"></div>
+  <div class="footer-overlay"></div>
+  <div class="footer-top">
+    <p class="footer-logo">The Magpie Experiment</p>
+    <p class="footer-tagline">Zhanqiao Township · Linxiang · Hunan · China</p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-contact">
+      <!-- ↓↓ 替换成你的WhatsApp链接，格式：https://wa.me/你的号码 ↓↓ -->
+      <a href="https://wa.me/8618665917771">WhatsApp: +86 186 6591 7771</a>
+      <a href="https://www.tiktok.com/@zayn66888">TikTok: @zayn66888</a>
+    </div>
+    <div class="footer-legal">
+      Applications reviewed individually.<br>
+      Spots are limited by design.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── 导航栏滚动效果 ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Hero图片加载动效 ──
+window.addEventListener('load', () => {
+  document.getElementById('hero-bg').classList.add('loaded');
+});
+
+// ── Scroll Reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// ── FAQ accordion ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── SVG放射图 hover tooltip ──
+const rTip = document.getElementById('rTip');
+const rTipImg = document.getElementById('rTipImg');
+const rTipName = document.getElementById('rTipName');
+const rTipDesc = document.getElementById('rTipDesc');
+
+if (rTip) {
+  const svg = document.getElementById('radial-svg');
+  const dots = svg.querySelectorAll('.r-dot');
+  const names = svg.querySelectorAll('.r-name');
+  const dists = svg.querySelectorAll('.r-dist');
+  const isMobile = () => window.innerWidth <= 900;
+
+  dots.forEach((dot, i) => {
+    const name = dot.dataset.name;
+    const desc = dot.dataset.desc;
+    const img  = dot.dataset.img;
+    if (!name) return;
+
+    [names[i], dists[i]].forEach(el => {
+      if (!el) return;
+      el.dataset.name = name;
+      el.dataset.desc = desc;
+      el.dataset.img  = img || '';
+      el.style.cursor = 'default';
+    });
+
+    const hitArea = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    hitArea.setAttribute('cx', dot.getAttribute('cx'));
+    hitArea.setAttribute('cy', dot.getAttribute('cy'));
+    hitArea.setAttribute('r', '32');
+    hitArea.setAttribute('fill', 'transparent');
+    hitArea.style.cursor = 'pointer';
+    dot.parentNode.insertBefore(hitArea, dot.nextSibling);
+    hitArea.dataset.name = name;
+    hitArea.dataset.desc = desc;
+    hitArea.dataset.img  = img || '';
+
+    const allEls = [dot, hitArea, names[i], dists[i]].filter(Boolean);
+
+    allEls.forEach(el => {
+      // Desktop: mouse events
+      el.addEventListener('mouseenter', e => { showTip(name, desc, img, e); });
+      el.addEventListener('mousemove',  moveTooltip);
+      el.addEventListener('mouseleave', () => rTip.classList.remove('show'));
+
+      // Mobile: touch tap to show, tap elsewhere hides
+      el.addEventListener('touchstart', e => {
+        e.stopPropagation();
+        const t = e.touches[0];
+        showTip(name, desc, img, t);
+      }, { passive:true });
+    });
+  });
+
+  // tap outside to hide on mobile
+  document.addEventListener('touchstart', () => rTip.classList.remove('show'), { passive:true });
+}
+
+function showTip(name, desc, img, e) {
+  rTipName.textContent = name;
+  rTipDesc.textContent = desc;
+  if (img && img !== 'placeholder' && img !== '') {
+    rTipImg.src = img;
+    rTipImg.style.display = 'block';
+  } else {
+    rTipImg.style.display = 'none';
+  }
+  rTip.classList.add('show');
+  // need a brief delay so image loads before we measure size
+  requestAnimationFrame(() => positionTooltip(e));
+}
+
+function positionTooltip(e) {
+  if (!rTip) return;
+  const wrap = document.querySelector('.radial-svg-wrap');
+  if (!wrap) return;
+  const r = wrap.getBoundingClientRect();
+  const tipW = rTip.offsetWidth  || 220;
+  const tipH = rTip.offsetHeight || 200;
+  const cx = (e.clientX !== undefined ? e.clientX : e.pageX) - r.left;
+  const cy = (e.clientY !== undefined ? e.clientY : e.pageY - window.scrollY) - r.top;
+
+  let x = cx + 18;
+  let y = cy - tipH - 14;  // prefer showing ABOVE the point
+
+  // right overflow → flip left
+  if (x + tipW > r.width)  x = cx - tipW - 14;
+  // left overflow → clamp to 4px from left edge
+  if (x < 4) x = 4;
+  // top overflow → show below instead
+  if (y < 4) y = cy + 20;
+  // bottom overflow → clamp
+  if (y + tipH > r.height) y = r.height - tipH - 4;
+
+  rTip.style.left = x + 'px';
+  rTip.style.top  = y + 'px';
+}
+
+function moveTooltip(e) { positionTooltip(e); }
+
+// ── 放射图进入视口触发线条动效 ──
+const rSvgWrap = document.querySelector('.radial-svg-wrap');
+if (rSvgWrap) {
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) ro.unobserve(rSvgWrap); });
+  }, { threshold: 0.2 });
+  ro.observe(rSvgWrap);
+}
+</script>
+
+</body>
+</html>
