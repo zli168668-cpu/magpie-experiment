@@ -228,8 +228,10 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 .hero-btn:hover { background:#6aaa2e; transform:translateY(-2px); }
 .hero-note {
   display:block; margin-top:14px;
-  font-size:11px; color:rgba(255,255,255,.45); letter-spacing:.06em;
+  font-size:11px; color:rgba(255,255,255,.52); letter-spacing:.06em;
 }
+.section-label.label-up { font-size:11px; }
+.section-label.label-bright { color:rgba(255,255,255,.42) !important; }
 
 /* ── SECTION COMMONS ── */
 .section-label {
@@ -636,7 +638,7 @@ footer {
 }
 .footer-contact a:hover { color:var(--orange); }
 .footer-legal {
-  font-size:11px; color:rgba(255,255,255,.55); text-align:right; line-height:1.8;
+  font-size:11px; color:rgba(255,255,255,.62); text-align:right; line-height:1.8;
   text-shadow:0 1px 6px rgba(0,0,0,.4);
   /* avoid overlap with float-cta (190px wide + 28px right = ~220px from right) */
   margin-right:230px;
@@ -645,6 +647,7 @@ footer {
 /* ── SCROLL REVEAL ── */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity:1; transform:none; }
+.reveal.no-transition { transition:none !important; }
 
 /* ── RESPONSIVE ── */
 @media (max-width:900px) {
@@ -727,13 +730,13 @@ footer {
   <div class="founder-overlay"></div>
   <div class="founder-content reveal">
     <div class="founder-text-card">
-      <p class="section-label" style="color:rgba(255,255,255,.5)">Why this exists</p>
+      <p class="section-label light label-bright" style="color:rgba(255,255,255,.62) !important;">Why this exists</p>
       <p>I built this guesthouse with my own hands in a village most Chinese people have never heard of.</p>
       <p>It is, of course, also a business.<br>But more importantly, it gives people the chance to slowly discover a more real China through everyday life.</p>
       <p>I've watched China get explained, flattened, and packaged for foreign audiences for years — the skylines, the tech, the approved narratives. What rarely makes it through is the other 90% of the country: the villages, the markets, the Tuesday mornings where nothing particular happens and everything is quietly real.</p>
       <p>I want to change that. Not by telling you what to think. But by giving you a place to stay long enough to see for yourself.</p>
       <p>This is not a hotel. It's not a tour.<br>It's an experiment — and you're part of it.</p>
-      <p class="founder-sig">— <strong>Zayn</strong>, founder &amp; builder &nbsp;·&nbsp; @zayn66888 on TikTok</p>
+      <p class="founder-sig">— <strong>Zayn</strong>, founder &amp; builder </p>
     </div>
   </div>
 </section>
@@ -742,13 +745,13 @@ footer {
 <div class="land-break">
   <div class="land-break-bg"></div>
   <div class="land-break-overlay"></div>
-  <p class="land-break-text">No packaging. No performance.<br>Just the place.</p>
+  <p class="land-break-text reveal">No packaging. No performance.<br>Just the place.</p>
 </div>
 
 <!-- ══ SCENES ══ -->
 <section class="scenes">
   <div class="scenes-header reveal">
-    <p class="section-label">What a month here looks like</p>
+    <p class="section-label label-up">What a month here looks like</p>
     <h2>Four scenes from daily life</h2>
   </div>
 
@@ -808,8 +811,8 @@ footer {
 
 <!-- ══ COMMUNITY ══ -->
 <section class="community">
-  <div class="community-inner">
-    <p class="section-label light">The other side of this</p>
+  <div class="community-inner reveal">
+    <p class="section-label light label-bright">The other side of this</p>
     <h2>This isn't only about solitude.</h2>
     <p>It's also about the people in the house with you. Each cohort brings together a small group — creators, filmmakers, writers, photographers — people who are curious about the world and practiced at expressing it. Think of it less like a guesthouse, more like the best hostel you've ever stayed in: the kind where you end up talking until 2am, collaborating on something you didn't plan, and leaving with three friendships you didn't expect. The village provides the material. The people in the house provide the energy.</p>
   </div>
@@ -823,7 +826,7 @@ footer {
 <!-- ══ NOT FOR ══ -->
 <section class="notfor">
   <div class="notfor-inner reveal">
-    <p class="section-label">Honest disclosure</p>
+    <p class="section-label label-up">Honest disclosure</p>
     <h2>This place is not for most people.</h2>
     <div class="notfor-list">
       <div class="notfor-item"><span class="dash">—</span><p>There is no room service. No concierge. No curated experience.</p></div>
@@ -842,7 +845,7 @@ footer {
 <!-- ══ RADIAL DISTANCE ══ -->
 <section class="map-section">
   <div class="map-inner">
-    <p class="section-label">Where, exactly</p>
+    <p class="section-label label-up">Where, exactly</p>
     <h2>Zhanqiao Township, Linxiang<br><em>Hunan Province, China</em></h2>
 
     <div class="radial-svg-wrap reveal">
@@ -1149,7 +1152,7 @@ footer {
 <!-- ══ PRICING ══ -->
 <section class="pricing">
   <div class="pricing-inner">
-    <p class="section-label light">The arrangement</p>
+    <p class="section-label light label-up label-bright">The arrangement</p>
     <h2>This is not a nightly rate.</h2>
     <p class="pricing-lead">It's a period. Choose the one that fits where you are.</p>
     <div class="price-cards">
@@ -1223,7 +1226,7 @@ footer {
 <!-- ══ HOW TO APPLY ══ -->
 <section class="apply" id="apply-section">
   <div class="apply-inner">
-    <p class="section-label">How to apply</p>
+    <p class="section-label label-up">How to apply</p>
     <h2>Three steps.<br>Not every application is accepted.</h2>
     <div class="apply-steps">
       <div class="apply-step reveal">
@@ -1253,7 +1256,7 @@ footer {
 <!-- ══ FAQ ══ -->
 <section class="faq">
   <div class="faq-inner">
-    <p class="section-label">Common questions</p>
+    <p class="section-label label-up">Common questions</p>
     <h2>FAQ</h2>
 
     <div class="faq-item">
@@ -1291,17 +1294,17 @@ footer {
 <footer>
   <div class="footer-bg"></div>
   <div class="footer-overlay"></div>
-  <div class="footer-top">
+  <div class="footer-top reveal">
     <p class="footer-logo">The Magpie Experiment</p>
     <p class="footer-tagline">Zhanqiao Township · Linxiang · Hunan · China</p>
   </div>
   <div class="footer-bottom">
-    <div class="footer-contact">
+    <div class="footer-contact reveal">
       <!-- ↓↓ 替换成你的WhatsApp链接，格式：https://wa.me/你的号码 ↓↓ -->
       <a href="https://wa.me/8618665917771">WhatsApp: +86 186 6591 7771</a>
       <a href="https://www.tiktok.com/@zayn66888">TikTok: @zayn66888</a>
     </div>
-    <div class="footer-legal">
+    <div class="footer-legal reveal">
       Applications reviewed individually.<br>
       Spots are limited by design.
     </div>
@@ -1321,16 +1324,45 @@ window.addEventListener('load', () => {
 });
 
 // ── Scroll Reveal ──
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+const reveals = Array.from(document.querySelectorAll('.reveal'));
+let lastScrollY = window.scrollY;
+
+function resetRevealSilently(el) {
+  el.classList.add('no-transition');
+  el.classList.remove('visible');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => el.classList.remove('no-transition'));
+  });
+}
+
+function updateReveals() {
+  const currentScrollY = window.scrollY;
+  const scrollingDown = currentScrollY > lastScrollY;
+  const scrollingUp = currentScrollY < lastScrollY;
+  const viewportH = window.innerHeight;
+
+  reveals.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isFooterReveal = window.innerWidth > 900 && el.closest('footer');
+    const revealLine = isFooterReveal ? viewportH * 0.98 : viewportH * 0.88;
+
+    if (scrollingDown) {
+      if (!el.classList.contains('visible') && rect.top <= revealLine && rect.bottom > 0) {
+        el.classList.add('visible');
+      }
+    } else if (scrollingUp) {
+      if (el.classList.contains('visible') && rect.top >= viewportH + 40) {
+        resetRevealSilently(el);
+      }
     }
   });
-}, { threshold: 0.12 });
-reveals.forEach(el => observer.observe(el));
+
+  lastScrollY = currentScrollY;
+}
+
+window.addEventListener('scroll', updateReveals, { passive:true });
+window.addEventListener('resize', updateReveals);
+window.addEventListener('load', updateReveals);
 
 // ── FAQ accordion ──
 document.querySelectorAll('.faq-q').forEach(btn => {
@@ -1353,7 +1385,7 @@ if (rTip) {
   const dots = svg.querySelectorAll('.r-dot');
   const names = svg.querySelectorAll('.r-name');
   const dists = svg.querySelectorAll('.r-dist');
-  const isMobile = () => window.innerWidth <= 900;
+  const isMobileOrTablet = () => window.innerWidth <= 1024;
 
   dots.forEach((dot, i) => {
     const name = dot.dataset.name;
@@ -1383,22 +1415,69 @@ if (rTip) {
     const allEls = [dot, hitArea, names[i], dists[i]].filter(Boolean);
 
     allEls.forEach(el => {
-      // Desktop: mouse events
-      el.addEventListener('mouseenter', e => { showTip(name, desc, img, e); });
-      el.addEventListener('mousemove',  moveTooltip);
-      el.addEventListener('mouseleave', () => rTip.classList.remove('show'));
+      // Desktop: keep hover logic unchanged
+      el.addEventListener('mouseenter', e => {
+        if (isMobileOrTablet()) return;
+        showTip(name, desc, img, e);
+      });
+      el.addEventListener('mousemove', e => {
+        if (isMobileOrTablet()) return;
+        moveTooltip(e);
+      });
+      el.addEventListener('mouseleave', () => {
+        if (isMobileOrTablet()) return;
+        rTip.classList.remove('show');
+      });
 
-      // Mobile: touch tap to show, tap elsewhere hides
-      el.addEventListener('touchstart', e => {
+      // Mobile / tablet: click to lock, click elsewhere to close
+      el.addEventListener('click', e => {
+        if (!isMobileOrTablet()) return;
+        e.preventDefault();
         e.stopPropagation();
-        const t = e.touches[0];
-        showTip(name, desc, img, t);
-      }, { passive:true });
+        showTip(name, desc, img, e);
+      });
     });
   });
 
-  // tap outside to hide on mobile
-  document.addEventListener('touchstart', () => rTip.classList.remove('show'), { passive:true });
+  document.addEventListener('click', (e) => {
+    if (!isMobileOrTablet()) return;
+    if (rTip.contains(e.target)) return;
+    rTip.classList.remove('show');
+  });
+
+  window.addEventListener('resize', () => {
+    if (!isMobileOrTablet()) {
+      rTip.classList.remove('show');
+    }
+  });
+}
+
+function applyTooltipImageCrop(name) {
+  rTipImg.style.objectFit = '';
+  rTipImg.style.objectPosition = '';
+  rTipImg.style.height = 'auto';
+  rTipImg.style.maxHeight = '';
+  rTipImg.style.width = '100%';
+
+  if (window.innerWidth > 1024) return;
+  if (name !== 'Zhangjiajie' && name !== 'Fenghuang Ancient Town') return;
+  if (!rTipImg.naturalWidth || !rTipImg.naturalHeight) return;
+
+  const tipStyles = window.getComputedStyle(rTip);
+  const tipContentWidth =
+    rTip.clientWidth -
+    parseFloat(tipStyles.paddingLeft || 0) -
+    parseFloat(tipStyles.paddingRight || 0);
+
+  if (!tipContentWidth) return;
+
+  const naturalRenderedHeight = tipContentWidth * (rTipImg.naturalHeight / rTipImg.naturalWidth);
+  const visibleRatio = name === 'Zhangjiajie' ? 0.80 : 0.85;
+
+  rTipImg.style.height = (naturalRenderedHeight * visibleRatio) + 'px';
+  rTipImg.style.maxHeight = rTipImg.style.height;
+  rTipImg.style.objectFit = 'cover';
+  rTipImg.style.objectPosition = 'center top';
 }
 
 function showTip(name, desc, img, e) {
@@ -1407,12 +1486,16 @@ function showTip(name, desc, img, e) {
   if (img && img !== 'placeholder' && img !== '') {
     rTipImg.src = img;
     rTipImg.style.display = 'block';
+    rTipImg.onload = () => applyTooltipImageCrop(name);
+    if (rTipImg.complete) applyTooltipImageCrop(name);
   } else {
     rTipImg.style.display = 'none';
   }
   rTip.classList.add('show');
-  // need a brief delay so image loads before we measure size
-  requestAnimationFrame(() => positionTooltip(e));
+  requestAnimationFrame(() => {
+    applyTooltipImageCrop(name);
+    positionTooltip(e);
+  });
 }
 
 function positionTooltip(e) {
