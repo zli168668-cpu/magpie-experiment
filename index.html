@@ -417,7 +417,7 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 .notfor-divider strong { color:var(--brown); font-weight:500; }
 
 /* ── RADIAL DISTANCE SVG ── */
-.map-section { background:var(--cream2); padding:100px 48px; }
+.map-section { background:var(--cream2); padding:100px 48px; position:relative; }
 .map-inner { max-width:1200px; margin:0 auto; }
 .map-inner h2 {
   font-family:'Outfit',system-ui,sans-serif; font-size:clamp(28px,3.5vw,44px);
@@ -425,6 +425,17 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 }
 .radial-svg-wrap { width:100%; position:relative; }
 #radial-svg { width:100%; height:auto; display:block; overflow:visible; }
+.map-hint {
+  position:absolute;
+  left:50%;
+  bottom:2px;
+  transform:translateX(-50%);
+  text-align:center;
+  font-size:11px;
+  color:rgba(74,107,88,.72);
+  line-height:1;
+  white-space:nowrap;
+}
 
 /* 节点label */
 .r-name { font-family:'Outfit',sans-serif; font-size:14px; font-weight:600; fill:#0D2218; }
@@ -479,6 +490,11 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
   animation: particle-flow linear infinite;
 }
 
+@media (max-width:1024px) {
+  #radial-svg .r-name { font-size:18px; }
+  #radial-svg .r-dist { font-size:14px; }
+  .map-hint { font-size:11px !important; font-weight:600; }
+}
 @media (max-width:900px) { .map-section { padding:60px 20px; } }
 
 /* ── PRICING ── */
@@ -505,6 +521,21 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
   font-weight:300; color:var(--white); line-height:1; margin-bottom:6px;
 }
 .price-usd { font-size:13px; color:rgba(255,255,255,.4); margin-bottom:28px; }
+.price-usd-blue {
+  display:inline-block;
+  background:#0757c8;
+  color:#fff;
+  padding:2px 5px;
+  line-height:1.2;
+  margin-bottom:8px;
+}
+.rate-note {
+  font-size:12px;
+  color:rgba(255,255,255,.62);
+  line-height:1.55;
+  margin-bottom:22px;
+  max-width:360px;
+}
 .price-includes { list-style:none; }
 .price-includes li {
   font-size:13px; color:rgba(255,255,255,.65); padding:8px 0;
@@ -697,6 +728,24 @@ footer {
   .footer-overlay { background:rgba(37,26,12,.55) !important; }
   .footer-bg { background-position:center center !important; }
 }
+
+/* ── MOBILE MAP COMPACT FIX ── */
+@media (max-width:600px) {
+  .map-section { padding:42px 20px 24px; }
+  .map-inner .section-label { margin-bottom:8px; }
+  .map-inner h2 {
+    font-size:clamp(25px,6.8vw,29px);
+    line-height:1.25;
+    letter-spacing:0;
+    margin:8px 0 24px;
+  }
+  .radial-svg-wrap { margin-top:0; }
+  #radial-svg {
+    clip-path:inset(0 0 8% 0);
+    margin-bottom:-8%;
+  }
+}
+
 </style>
 </head>
 
@@ -1146,6 +1195,7 @@ footer {
         <path id="p-market"     d="M820,500 L989,438"  fill="none"/>
       </svg>
     </div>
+    <p class="map-hint">*Click the attraction name to view its image.</p>
   </div>
 </section>
 
@@ -1160,7 +1210,8 @@ footer {
         <span class="price-badge">Entry period</span>
         <p class="price-tier">14-Day Residency</p>
         <p class="price-amount">¥2,800</p>
-        <p class="price-usd">~$390 USD</p>
+        <p class="price-usd price-usd-blue">~$410 USD</p>
+        <p class="rate-note">Rates may fluctuate; settlement is based on the RMB amount at transaction time.</p>
         <ul class="price-includes">
           <li>Private room, 14 nights</li>
           <li>Shared kitchen, fully equipped</li>
@@ -1172,7 +1223,8 @@ footer {
         <span class="price-badge">Recommended</span>
         <p class="price-tier">30-Day Residency</p>
         <p class="price-amount">¥3,800</p>
-        <p class="price-usd">~$530 USD</p>
+        <p class="price-usd price-usd-blue">~$560 USD</p>
+        <p class="rate-note">Rates may fluctuate; settlement is based on the RMB amount at transaction time.</p>
         <ul class="price-includes">
           <li>Private room, 30 nights</li>
           <li>Everything above</li>
@@ -1193,8 +1245,8 @@ footer {
     <p class="section-label">The content part — read carefully</p>
     <h2>I'm not paying you<br>to say China is great.</h2>
     <p>I'm not asking you to say anything at all.</p>
-    <p>What I believe is this: if you spend a real month here, you'll have something worth sharing — something most creators will never have access to. To apply, you'll need to share your TikTok profile and at least one recent piece of work. This isn't about follower count. It's about whether you actually make things.</p>
-    <p>If you choose to post about your time here — honestly, without a required angle — and you enable TikTok's content disclosure label and tag @zayn66888:</p>
+    <p>What I believe is this: if you spend a real month here, you'll have something worth sharing — something most creators will never have access to. To apply, you'll need to share your social media profile (preferably TikTok or Instagram) and at least one recent piece of work. This isn't about follower count. It's about whether you actually make things.</p>
+    <p>If you choose to post about your time here — honestly, without a required angle — and you enable TikTok's content disclosure label and tag: Founder on TikTok: @zayn66888</p>
     <div class="incentive-tiers">
       <div class="tier-card">
         <div class="tier-views">5k – 20k views</div>
@@ -1277,11 +1329,11 @@ footer {
     </div>
     <div class="faq-item">
       <button class="faq-q">What language do the villagers speak?<span class="faq-arrow">+</span></button>
-      <div class="faq-a"><p>Mandarin and local Hunanese dialect. Very little English. A translation app helps enormously. Struggling to communicate is genuinely part of the experience — and usually ends in laughter.</p></div>
+      <div class="faq-a"><p>Mandarin and local Hunanese dialect. Villagers generally do not speak English. A translation app helps enormously. Struggling to communicate is genuinely part of the experience — and usually ends in laughter.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q">What's nearby — is there anything to do outside the property?<span class="faq-arrow">+</span></button>
-      <div class="faq-a"><p>The daily market is 5km away. Tongcheng, the nearest county town (in Hubei, 20 minutes by car), has a cinema, large supermarkets, cafés, bars, restaurants, and banks — everything a city has, at a quieter scale. Yueyang, with its famous tower and Dongting Lake, is 60km away. Changsha is two hours. You won't be stranded.</p></div>
+      <div class="faq-a"><p>The daily market is 5km away. Tongcheng, the nearest county town (in Hubei, 20 minutes by car), has a cinema, large supermarkets, cafés, bars, restaurants, and banks — everything a city has, at a quieter scale. Yueyang, home to Yueyang Tower (one of China's Four Great Towers) and Dongting Lake (China's third-largest freshwater lake), is 60km away. Changsha is two hours. You won't be stranded.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-q">What if I want to leave before my period ends?<span class="faq-arrow">+</span></button>
