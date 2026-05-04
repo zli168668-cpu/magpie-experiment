@@ -1274,6 +1274,32 @@ footer {
   }
 }
 
+@supports (-webkit-touch-callout:none) {
+  @media (min-width:768px) and (max-width:1240px) and (orientation:landscape) {
+    .scene-block:not(.market-scene) .scene-imgs {
+      display:grid;
+      grid-template-columns:1fr !important;
+      grid-template-rows:1fr 1fr !important;
+      height:520px !important;
+      gap:0 !important;
+      background:transparent !important;
+    }
+    .scene-block:not(.market-scene) .scene-imgs .img-top,
+    .scene-block:not(.market-scene) .scene-imgs .img-bot {
+      height:100% !important;
+      width:100% !important;
+    }
+    .scene-block:not(.market-scene) .scene-imgs .img-top {
+      grid-column:1 !important;
+      grid-row:1 !important;
+    }
+    .scene-block:not(.market-scene) .scene-imgs .img-bot {
+      grid-column:1 !important;
+      grid-row:2 !important;
+    }
+  }
+}
+
 </style>
 </head>
 
@@ -1544,7 +1570,7 @@ footer {
 
         <!-- 中心核 -->
         <circle cx="820" cy="500" r="48" fill="#003023"/>
-        <text x="820" text-anchor="middle" font-family="Outfit,sans-serif" font-size="18" font-weight="600" fill="#F6FEF9" letter-spacing="1.4">
+        <text x="820" text-anchor="middle" font-family="Outfit,sans-serif" font-size="14" font-weight="600" fill="#F6FEF9" letter-spacing="1.4">
           <tspan x="820" y="493">WE ARE</tspan>
           <tspan x="820" y="521">HERE</tspan>
         </text>
@@ -1805,7 +1831,7 @@ footer {
         <!-- center label, kept above rays and moving particles -->
         <g class="r-center-top" pointer-events="none">
           <circle cx="820" cy="500" r="48" fill="#003023"/>
-          <text x="820" text-anchor="middle" font-family="Outfit,sans-serif" font-size="18" font-weight="600" fill="#F6FEF9" letter-spacing="1.4">
+          <text x="820" text-anchor="middle" font-family="Outfit,sans-serif" font-size="14" font-weight="600" fill="#F6FEF9" letter-spacing="1.4">
           <tspan x="820" y="493">WE ARE</tspan>
           <tspan x="820" y="521">HERE</tspan>
         </text>
