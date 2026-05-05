@@ -1513,6 +1513,19 @@ html[data-current-lang="ar"] .float-cta span { text-align:center; }
   }
 }
 
+
+
+/* ── NON-MOBILE FOOTER OVERLAY + CTA SIZE TUNING — 2026-05-05 ──
+   Mobile keeps existing rules unchanged.
+   Tablet / mini-desktop footer uses the same overlay as mobile.
+   All non-mobile floating CTA buttons are reduced to 85% diameter. */
+@media (min-width:901px) and (max-width:1240px) {
+  .footer-overlay { background:rgba(37,26,12,.55) !important; }
+}
+
+@media (min-width:901px) {
+  .float-cta { width:161.5px !important; height:161.5px !important; }
+}
 </style>
 </head>
 <body>
