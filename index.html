@@ -1526,6 +1526,26 @@ html[data-current-lang="ar"] .float-cta span { text-align:center; }
 @media (min-width:901px) {
   .float-cta { width:161.5px !important; height:161.5px !important; }
 }
+
+
+/* ── TABLET LANDSCAPE补丁：补上非手机横屏设备的底图遮罩与悬浮按钮尺寸；手机不动 ── */
+@media (min-width:901px) and (max-width:1240px),
+       (min-width:768px) and (orientation:landscape) and (min-height:600px) and (hover:none) and (pointer:coarse) {
+  .footer-overlay { background:rgba(37,26,12,.55) !important; }
+}
+
+@media (min-width:901px),
+       (min-width:768px) and (orientation:landscape) and (min-height:600px) and (hover:none) and (pointer:coarse) {
+  .float-cta { width:161.5px !important; height:161.5px !important; }
+}
+
+/* ── TABLET PORTRAIT ONLY：Market 左图上移，露出女生头部上方更多画面；手机和其他版本不动 ── */
+@media (min-width:601px) and (orientation:portrait) and (hover:none) and (pointer:coarse) {
+  .scene-block.market-scene .scene-imgs .img-top {
+    background-position:center 65% !important;
+  }
+}
+
 </style>
 </head>
 <body>
