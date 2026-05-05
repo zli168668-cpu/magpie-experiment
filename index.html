@@ -1497,6 +1497,22 @@ html[data-current-lang="ar"] .float-cta span { text-align:center; }
   }
 }
 
+
+
+/* ─── iPad 横屏：修正场景图文卡片高度偶发不同步 ─── */
+@supports (-webkit-touch-callout:none) {
+  @media (min-width:768px) and (max-width:1240px) and (orientation:landscape) {
+    .scene-block:not(.market-scene) {
+      align-items:stretch !important;
+    }
+    .scene-block:not(.market-scene) .scene-imgs {
+      align-self:stretch !important;
+      height:auto !important;
+      min-height:520px !important;
+    }
+  }
+}
+
 </style>
 </head>
 <body>
