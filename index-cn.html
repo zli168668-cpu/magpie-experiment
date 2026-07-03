@@ -1738,15 +1738,15 @@ html[data-current-lang="ar"] .lang-caret {
   margin:0 !important;
 }
 @media (max-width:600px) {
-  .map-section .map-hint { bottom:-8px !important; }
+  .map-section .map-hint { bottom:-18px !important; }
 }
 @media (min-width:601px) and (max-width:1024px) {
-  .r-tooltip {
+  .r-tooltip.map-tip-wide {
     width:320px;
     padding:16px 18px;
   }
-  .r-tooltip-name { font-size:16px; }
-  .r-tooltip-desc { font-size:13px; }
+  .r-tooltip.map-tip-wide .r-tooltip-name { font-size:16px; }
+  .r-tooltip.map-tip-wide .r-tooltip-desc { font-size:13px; }
 }
 </style>
 </head>
@@ -2806,7 +2806,7 @@ function applyTooltipImageCrop(name) {
 
 function showTip(name, desc, img, e) {
   const verticalDesktopImages = ['Changsha', 'Wuhan', 'Wudang Mountains', 'Zhangjiajie', 'Three Gorges', 'Fenghuang Ancient Town'];
-  rTip.classList.toggle('map-tip-wide', window.innerWidth > 1024 && !verticalDesktopImages.includes(name));
+  rTip.classList.toggle('map-tip-wide', window.innerWidth > 600 && !verticalDesktopImages.includes(name));
   const lang = document.documentElement.getAttribute('data-current-lang') || document.documentElement.getAttribute('data-default-lang') || 'en';
   const localized = (window.MAGPIE_MAP_TOOLTIPS && window.MAGPIE_MAP_TOOLTIPS[lang] && window.MAGPIE_MAP_TOOLTIPS[lang][name]) || null;
   const displayName = localized && localized.name ? localized.name : name;
@@ -2864,20 +2864,6 @@ function positionTooltip(e, name = rTip.dataset.place || '') {
     let y = topAligned ? titleBottom + 40 : cy - tipH * 0.55;
     if (y < pad) y = pad;
     if (!topAligned && y + tipH > r.height - 84) y = Math.max(pad, r.height - tipH - 84);
-    rTip.style.left = x + 'px';
-    rTip.style.top = y + 'px';
-    return;
-  }
-
-  if (window.innerWidth <= 1024 || rTip.classList.contains('map-tip-wide')) {
-    const pad = window.innerWidth <= 1024 ? 20 : 24;
-    let x = cx > r.width * 0.52 ? pad : r.width - tipW - pad;
-    if (cx > r.width * 0.42 && cx < r.width * 0.58) {
-      x = Math.max(pad, Math.min(r.width - tipW - pad, cx - tipW / 2));
-    }
-    let y = cy - tipH * 0.5;
-    if (y < pad) y = pad;
-    if (y + tipH > r.height - pad) y = Math.max(pad, r.height - tipH - pad);
     rTip.style.left = x + 'px';
     rTip.style.top = y + 'px';
     return;
