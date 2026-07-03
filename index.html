@@ -1741,12 +1741,18 @@ html[data-current-lang="ar"] .lang-caret {
   .map-section .map-hint { bottom:-28px !important; }
 }
 @media (min-width:601px) and (max-width:1024px) {
-  .r-tooltip.map-tip-wide {
-    width:340px;
+  .r-tooltip {
+    width:320px;
     padding:16px 18px;
   }
-  .r-tooltip.map-tip-wide .r-tooltip-name { font-size:16px; }
-  .r-tooltip.map-tip-wide .r-tooltip-desc { font-size:13px; }
+  .r-tooltip-name { font-size:16px; }
+  .r-tooltip-desc { font-size:13px; }
+  .r-tooltip.map-tip-vertical {
+    width:400px;
+    padding:18px 20px;
+  }
+  .r-tooltip.map-tip-vertical .r-tooltip-name { font-size:17px; }
+  .r-tooltip.map-tip-vertical .r-tooltip-desc { font-size:14px; }
 }
 </style>
 </head>
@@ -2830,7 +2836,9 @@ function applyTooltipImageCrop(name) {
 }
 
 function showTip(name, desc, img, e) {
-  rTip.classList.toggle('map-tip-wide', window.innerWidth > 600);
+  const verticalMapImages = ['Changsha', 'Wuhan', 'Wudang Mountains', 'Zhangjiajie', 'Three Gorges', 'Fenghuang Ancient Town'];
+  rTip.classList.toggle('map-tip-wide', window.innerWidth > 1024);
+  rTip.classList.toggle('map-tip-vertical', window.innerWidth > 600 && window.innerWidth <= 1024 && verticalMapImages.includes(name));
   const lang = document.documentElement.getAttribute('data-current-lang') || document.documentElement.getAttribute('data-default-lang') || 'en';
   const localized = (window.MAGPIE_MAP_TOOLTIPS && window.MAGPIE_MAP_TOOLTIPS[lang] && window.MAGPIE_MAP_TOOLTIPS[lang][name]) || null;
   const displayName = localized && localized.name ? localized.name : name;
@@ -2915,9 +2923,10 @@ function moveTooltip(e) { positionTooltip(e); }
 const rSvgWrap = document.querySelector('.radial-svg-wrap');
 if (rSvgWrap) {
   let mapDemoWasVisible = false;
+  const mapDemoTarget = rSvgWrap.closest('.map-section') || rSvgWrap;
   const ro = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting && e.intersectionRatio >= 0.66) {
+      if (e.isIntersecting && e.intersectionRatio >= 0.32) {
         if (!mapDemoWasVisible) {
           mapDemoWasVisible = true;
           if (typeof window.setMapDemoViewportState === 'function') window.setMapDemoViewportState(true);
@@ -2925,13 +2934,13 @@ if (rSvgWrap) {
             if (mapDemoWasVisible && typeof window.runMapEntryDemo === 'function') window.runMapEntryDemo();
           }, 650);
         }
-      } else if (!e.isIntersecting || e.intersectionRatio < 0.45) {
+      } else if (!e.isIntersecting || e.intersectionRatio < 0.08) {
         mapDemoWasVisible = false;
         if (typeof window.setMapDemoViewportState === 'function') window.setMapDemoViewportState(false);
       }
     });
-  }, { threshold:[0.2,0.5,0.66], rootMargin:'0px 0px -6% 0px' });
-  ro.observe(rSvgWrap);
+  }, { threshold:[0,0.08,0.32,0.66], rootMargin:'0px 0px -6% 0px' });
+  ro.observe(mapDemoTarget);
 }
 </script>
 </body>
