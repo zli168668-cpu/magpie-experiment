@@ -926,6 +926,7 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 }
 .radial-svg-wrap { width:100%; position:relative; }
 #radial-svg { width:100%; height:auto; display:block; overflow:visible; }
+#radial-svg, #radial-svg * { -webkit-tap-highlight-color:transparent; outline:none; user-select:none; }
 .map-hint {
   position:absolute;
   left:50%;
@@ -973,8 +974,8 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 .r-tooltip.show { opacity:1; }
 .map-demo-tap {
   position:absolute;
-  width:38px;
-  height:38px;
+  width:19px;
+  height:19px;
   border:2px solid rgba(131,196,65,.88);
   border-radius:50%;
   pointer-events:none;
@@ -1000,6 +1001,12 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 }
 .r-tooltip-name { font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:#F6FEF9; }
 .r-tooltip-desc { font-family:'Outfit',sans-serif; font-size:11px; color:rgba(246,254,249,.65); margin-top:3px; line-height:1.5; }
+.r-tooltip.map-tip-wide {
+  width:320px;
+  padding:16px 18px;
+}
+.r-tooltip.map-tip-wide .r-tooltip-name { font-size:16px; }
+.r-tooltip.map-tip-wide .r-tooltip-desc { font-size:13px; }
 
 /* Radial line particle flow animation */
 @keyframes particle-flow {
@@ -1016,10 +1023,10 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 @media (max-width:1024px) {
   #radial-svg .r-name { font-size:22px; }
   #radial-svg .r-dist { font-size:16px; transform:translateY(10px); }
-  .map-hint { font-size:11px !important; font-weight:600; }
+  .map-hint { bottom:20px; font-size:11px !important; font-weight:600; }
 }
 @media (max-width:600px) {
-  #radial-svg .r-name { font-size:32px; font-weight:600; }
+  #radial-svg .r-name { font-size:28px; font-weight:450; }
   #radial-svg .r-dist { font-size:22px; transform:translateY(15px); }
 }
 @media (max-width:900px) { .map-section { padding:60px 20px; } }
@@ -1287,18 +1294,19 @@ footer {
 
 /* ── MOBILE MAP COMPACT FIX ── */
 @media (max-width:600px) {
-  .map-section { padding:54px 20px 96px; }
+  .map-section { padding:104px 20px 0; }
   .map-inner .section-label { margin-bottom:8px; }
   .map-inner h2 {
     font-size:clamp(25px,6.8vw,29px);
     line-height:1.25;
     letter-spacing:0;
-    margin:8px 0 24px;
+    margin:8px 0 10px;
   }
-  .radial-svg-wrap { margin-top:10px; padding-bottom:42px; }
+  .map-inner { transform:translateY(-38px); }
+  .radial-svg-wrap { margin-top:26px; padding-bottom:96px; }
   #radial-svg {
-    clip-path:inset(0 0 8% 0);
-    margin-bottom:-8%;
+    clip-path:none;
+    margin-bottom:0;
   }
 }
 
@@ -1553,11 +1561,12 @@ html[data-current-lang="ar"] .float-cta span { text-align:center; }
 }
 
 @media (max-width:600px) {
+  .map-hint { bottom:20px; }
   #radial-svg {
-    transform:translate(-27px,-18px) !important;
+    transform:translate(-27px,44px) !important;
     transform-origin:center center;
     overflow:visible !important;
-    margin-top:72px !important;
+    margin-top:36px !important;
   }
 }
 
@@ -1722,6 +1731,22 @@ html[data-current-lang="ar"] .lang-caret {
   .nav-logo { max-width:calc(100vw - 142px) !important; }
   .lang-button { min-width:88px !important; min-height:32px !important; padding:0 12px !important; font-size:11.5px !important; letter-spacing:.015em !important; }
   .lang-menu { width:118px !important; min-width:118px !important; }
+}
+.map-section .map-hint {
+  position:absolute !important;
+  bottom:10px !important;
+  margin:0 !important;
+}
+@media (max-width:600px) {
+  .map-section .map-hint { bottom:-8px !important; }
+}
+@media (min-width:601px) and (max-width:1024px) {
+  .r-tooltip {
+    width:320px;
+    padding:16px 18px;
+  }
+  .r-tooltip-name { font-size:16px; }
+  .r-tooltip-desc { font-size:13px; }
 }
 </style>
 </head>
@@ -2583,7 +2608,9 @@ if (rTip) {
     hitArea.setAttribute('r', '32');
     hitArea.setAttribute('fill', 'transparent');
     hitArea.setAttribute('pointer-events', 'all');
+    hitArea.setAttribute('tabindex', '-1');
     hitArea.style.cursor = 'pointer';
+    hitArea.style.webkitTapHighlightColor = 'transparent';
     dot.parentNode.insertBefore(hitArea, dot.nextSibling);
     hitArea.dataset.name = name;
     hitArea.dataset.desc = desc;
@@ -2598,7 +2625,9 @@ if (rTip) {
       labelHitArea.setAttribute('height', labelBox.height + 32);
       labelHitArea.setAttribute('fill', 'transparent');
       labelHitArea.setAttribute('pointer-events', 'all');
+      labelHitArea.setAttribute('tabindex', '-1');
       labelHitArea.style.cursor = 'pointer';
+      labelHitArea.style.webkitTapHighlightColor = 'transparent';
       dot.parentNode.insertBefore(labelHitArea, names[i] || dot.nextSibling);
       labelHitArea.dataset.name = name;
       labelHitArea.dataset.desc = desc;
@@ -2611,6 +2640,7 @@ if (rTip) {
       // Desktop: keep hover logic unchanged
       el.addEventListener('mouseenter', e => {
         if (isMobileOrTablet()) return;
+        mapUserInteracted = true;
         showTip(name, desc, img, e);
       });
       el.addEventListener('mousemove', e => {
@@ -2775,6 +2805,8 @@ function applyTooltipImageCrop(name) {
 }
 
 function showTip(name, desc, img, e) {
+  const verticalDesktopImages = ['Changsha', 'Wuhan', 'Wudang Mountains', 'Zhangjiajie', 'Three Gorges', 'Fenghuang Ancient Town'];
+  rTip.classList.toggle('map-tip-wide', window.innerWidth > 1024 && !verticalDesktopImages.includes(name));
   const lang = document.documentElement.getAttribute('data-current-lang') || document.documentElement.getAttribute('data-default-lang') || 'en';
   const localized = (window.MAGPIE_MAP_TOOLTIPS && window.MAGPIE_MAP_TOOLTIPS[lang] && window.MAGPIE_MAP_TOOLTIPS[lang][name]) || null;
   const displayName = localized && localized.name ? localized.name : name;
@@ -2800,14 +2832,15 @@ function showTip(name, desc, img, e) {
   } else {
     rTipImg.style.display = 'none';
   }
+  rTip.dataset.place = name;
   rTip.classList.add('show');
   requestAnimationFrame(() => {
     applyTooltipImageCrop(name);
-    positionTooltip(e);
+    positionTooltip(e, name);
   });
 }
 
-function positionTooltip(e) {
+function positionTooltip(e, name = rTip.dataset.place || '') {
   if (!rTip) return;
   const wrap = document.querySelector('.radial-svg-wrap');
   if (!wrap) return;
@@ -2816,6 +2849,39 @@ function positionTooltip(e) {
   const tipH = rTip.offsetHeight || 200;
   const cx = (e.clientX !== undefined ? e.clientX : e.pageX) - r.left;
   const cy = (e.clientY !== undefined ? e.clientY : e.pageY - window.scrollY) - r.top;
+
+  if (window.innerWidth <= 600) {
+    const pad = 8;
+    const topAligned = ['Mt. Heng (Nanyue)', 'Tongcheng', 'Town Market'].includes(name);
+    const rightAligned = ['Changsha', 'Three Gorges', 'Fenghuang Ancient Town'].includes(name);
+    const leftAligned = topAligned || cx > r.width * 0.52;
+    let x = rightAligned ? r.width - tipW - pad : (leftAligned ? pad : r.width - tipW - pad);
+    if (!topAligned && !rightAligned && cx > r.width * 0.38 && cx < r.width * 0.62) {
+      x = Math.max(pad, Math.min(r.width - tipW - pad, cx - tipW / 2));
+    }
+    const title = document.querySelector('.map-inner h2');
+    const titleBottom = title ? title.getBoundingClientRect().bottom - r.top : -40;
+    let y = topAligned ? titleBottom + 40 : cy - tipH * 0.55;
+    if (y < pad) y = pad;
+    if (!topAligned && y + tipH > r.height - 84) y = Math.max(pad, r.height - tipH - 84);
+    rTip.style.left = x + 'px';
+    rTip.style.top = y + 'px';
+    return;
+  }
+
+  if (window.innerWidth <= 1024 || rTip.classList.contains('map-tip-wide')) {
+    const pad = window.innerWidth <= 1024 ? 20 : 24;
+    let x = cx > r.width * 0.52 ? pad : r.width - tipW - pad;
+    if (cx > r.width * 0.42 && cx < r.width * 0.58) {
+      x = Math.max(pad, Math.min(r.width - tipW - pad, cx - tipW / 2));
+    }
+    let y = cy - tipH * 0.5;
+    if (y < pad) y = pad;
+    if (y + tipH > r.height - pad) y = Math.max(pad, r.height - tipH - pad);
+    rTip.style.left = x + 'px';
+    rTip.style.top = y + 'px';
+    return;
+  }
 
   let x = cx + 18;
   let y = cy - tipH - 14;  // prefer showing ABOVE the point
