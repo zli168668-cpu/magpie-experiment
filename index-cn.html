@@ -1002,11 +1002,11 @@ nav.scrolled .nav-apply { color:var(--white); border-color:rgba(255,255,255,.5);
 .r-tooltip-name { font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:#F6FEF9; }
 .r-tooltip-desc { font-family:'Outfit',sans-serif; font-size:11px; color:rgba(246,254,249,.65); margin-top:3px; line-height:1.5; }
 .r-tooltip.map-tip-wide {
-  width:320px;
-  padding:16px 18px;
+  width:380px;
+  padding:18px 20px;
 }
-.r-tooltip.map-tip-wide .r-tooltip-name { font-size:16px; }
-.r-tooltip.map-tip-wide .r-tooltip-desc { font-size:13px; }
+.r-tooltip.map-tip-wide .r-tooltip-name { font-size:17px; }
+.r-tooltip.map-tip-wide .r-tooltip-desc { font-size:14px; }
 
 /* Radial line particle flow animation */
 @keyframes particle-flow {
@@ -1738,11 +1738,11 @@ html[data-current-lang="ar"] .lang-caret {
   margin:0 !important;
 }
 @media (max-width:600px) {
-  .map-section .map-hint { bottom:-18px !important; }
+  .map-section .map-hint { bottom:-28px !important; }
 }
 @media (min-width:601px) and (max-width:1024px) {
   .r-tooltip.map-tip-wide {
-    width:320px;
+    width:340px;
     padding:16px 18px;
   }
   .r-tooltip.map-tip-wide .r-tooltip-name { font-size:16px; }
@@ -2573,6 +2573,8 @@ if (rTip) {
   const isMobileOrTablet = () => window.innerWidth <= 1024;
   const isPhoneMap = () => window.innerWidth <= 1024;
   let mapUserInteracted = false;
+  let mapDemoInView = false;
+  let mapDemoRunId = 0;
 
   applyMobileMapLayout(svg, dots, names, dists, isPhoneMap);
 
@@ -2641,6 +2643,8 @@ if (rTip) {
       el.addEventListener('mouseenter', e => {
         if (isMobileOrTablet()) return;
         mapUserInteracted = true;
+        window.__magpieMapDemoActive = false;
+        mapDemoRunId++;
         showTip(name, desc, img, e);
       });
       el.addEventListener('mousemove', e => {
@@ -2658,6 +2662,8 @@ if (rTip) {
         e.preventDefault();
         e.stopPropagation();
         mapUserInteracted = true;
+        window.__magpieMapDemoActive = false;
+        mapDemoRunId++;
         showTip(name, desc, img, e);
       });
     });
@@ -2676,7 +2682,7 @@ if (rTip) {
   });
 
   window.runMapEntryDemo = () => {
-    if (mapUserInteracted || window.__magpieMapDemoShown) return;
+    if (mapUserInteracted || window.__magpieMapDemoActive) return;
     const wrap = document.querySelector('.radial-svg-wrap');
     const demoDots = [
       svg.querySelector('.r-dot[data-name="Wuhan"]'),
@@ -2684,12 +2690,15 @@ if (rTip) {
     ].filter(Boolean);
     if (!wrap || demoDots.length < 2) return;
 
-    window.__magpieMapDemoShown = true;
+    mapDemoInView = true;
+    const runId = ++mapDemoRunId;
+    window.__magpieMapDemoActive = true;
     demoDots.forEach(dot => preloadMapImage(dot.dataset.img));
+    const demoStillActive = () => mapDemoInView && !mapUserInteracted && mapDemoRunId === runId;
 
     const runStep = (demoDot, startDelay) => {
       setTimeout(() => {
-        if (mapUserInteracted) return;
+        if (!demoStillActive()) return;
         const dotBox = demoDot.getBoundingClientRect();
         const wrapBox = wrap.getBoundingClientRect();
         const clientX = dotBox.left + dotBox.width / 2;
@@ -2703,7 +2712,7 @@ if (rTip) {
         demoDot.classList.add('map-demo-focus');
 
         setTimeout(() => {
-          if (!mapUserInteracted) {
+          if (demoStillActive()) {
             showTip(demoDot.dataset.name, demoDot.dataset.desc, demoDot.dataset.img, { clientX, clientY });
           }
         }, 650);
@@ -2714,13 +2723,29 @@ if (rTip) {
         }, 1700);
 
         setTimeout(() => {
-          if (!mapUserInteracted) rTip.classList.remove('show');
+          if (demoStillActive()) rTip.classList.remove('show');
         }, 2150);
       }, startDelay);
     };
 
     runStep(demoDots[0], 0);
     runStep(demoDots[1], 3150);
+    setTimeout(() => {
+      if (mapDemoRunId === runId) window.__magpieMapDemoActive = false;
+    }, 5600);
+  };
+  window.setMapDemoViewportState = (visible) => {
+    mapDemoInView = visible;
+    if (!visible) {
+      mapDemoRunId++;
+      mapUserInteracted = false;
+      window.__magpieMapDemoActive = false;
+      rTip.classList.remove('show');
+      document.querySelectorAll('.map-demo-tap').forEach(el => el.remove());
+      document.querySelectorAll('.map-demo-focus').forEach(el => el.classList.remove('map-demo-focus'));
+    } else {
+      mapUserInteracted = false;
+    }
   };
 }
 
@@ -2890,13 +2915,20 @@ function moveTooltip(e) { positionTooltip(e); }
 // ── 放射图进入视口触发线条动效 ──
 const rSvgWrap = document.querySelector('.radial-svg-wrap');
 if (rSvgWrap) {
+  let mapDemoWasVisible = false;
   const ro = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting && e.intersectionRatio >= 0.66) {
-        ro.unobserve(rSvgWrap);
-        setTimeout(() => {
-          if (typeof window.runMapEntryDemo === 'function') window.runMapEntryDemo();
-        }, 650);
+        if (!mapDemoWasVisible) {
+          mapDemoWasVisible = true;
+          if (typeof window.setMapDemoViewportState === 'function') window.setMapDemoViewportState(true);
+          setTimeout(() => {
+            if (mapDemoWasVisible && typeof window.runMapEntryDemo === 'function') window.runMapEntryDemo();
+          }, 650);
+        }
+      } else if (e.intersectionRatio < 0.18) {
+        mapDemoWasVisible = false;
+        if (typeof window.setMapDemoViewportState === 'function') window.setMapDemoViewportState(false);
       }
     });
   }, { threshold:[0.2,0.5,0.66], rootMargin:'0px 0px -6% 0px' });
