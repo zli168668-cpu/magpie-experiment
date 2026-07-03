@@ -2830,8 +2830,7 @@ function applyTooltipImageCrop(name) {
 }
 
 function showTip(name, desc, img, e) {
-  const verticalDesktopImages = ['Changsha', 'Wuhan', 'Wudang Mountains', 'Zhangjiajie', 'Three Gorges', 'Fenghuang Ancient Town'];
-  rTip.classList.toggle('map-tip-wide', window.innerWidth > 600 && !verticalDesktopImages.includes(name));
+  rTip.classList.toggle('map-tip-wide', window.innerWidth > 600);
   const lang = document.documentElement.getAttribute('data-current-lang') || document.documentElement.getAttribute('data-default-lang') || 'en';
   const localized = (window.MAGPIE_MAP_TOOLTIPS && window.MAGPIE_MAP_TOOLTIPS[lang] && window.MAGPIE_MAP_TOOLTIPS[lang][name]) || null;
   const displayName = localized && localized.name ? localized.name : name;
@@ -2926,7 +2925,7 @@ if (rSvgWrap) {
             if (mapDemoWasVisible && typeof window.runMapEntryDemo === 'function') window.runMapEntryDemo();
           }, 650);
         }
-      } else if (e.intersectionRatio < 0.18) {
+      } else if (!e.isIntersecting || e.intersectionRatio < 0.45) {
         mapDemoWasVisible = false;
         if (typeof window.setMapDemoViewportState === 'function') window.setMapDemoViewportState(false);
       }
