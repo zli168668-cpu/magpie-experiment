@@ -1,12 +1,12 @@
 <!DOC"zh-TW":{zh-TW":{YPE html>
 
-<html data-default-lang="zh-CN" dir="ltr" lang="zh-CN">
+<html data-default-lang="en" dir="ltr" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="https://res.cloudinary.com" rel="preconnect"/>
 <link href="https://res.cloudinary.com" rel="dns-prefetch"/>
-<title>喜鹊实验 — 住进真实的中国</title>
+<title>The Magpie Experiment — Live the Real China</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -1831,7 +1831,7 @@ html[data-current-lang="ar"] .lang-caret {
 <p><span data-i18n="t11">I built this guesthouse with my own hands in a village most Chinese people have never heard of.</span></p>
 <p><span data-i18n="t12">It is, of course, also a business.</span><br/><span data-i18n="t13">But more importantly, it gives people the chance to slowly discover a more real China through everyday life.</span></p>
 <p><span data-i18n="t14">I've watched China get explained, flattened, and packaged for foreign audiences for years — the skylines, the tech, the approved narratives. What rarely makes it through is the other 90% of the country: the villages, the markets, the Tuesday mornings where nothing particular happens and everything is quietly real.</span></p>
-<p><span data-i18n="t15">我想改变这一点。不是告诉你该怎么想，而是给你一个地方，让你住得足够久，切身去感受。</span></p>
+<p><span data-i18n="t15">I want to change that. Not by telling you what to think. But by giving you a place to stay long enough to see for yourself.</span></p>
 <p><span data-i18n="t16">This is not a hotel. It's not a tour.</span><br/><span data-i18n="t17">It's an experiment — and you're part of it.</span></p>
 <p class="founder-sig"><span data-i18n="t18">—</span> <strong><span data-i18n="t19">Zayn</span></strong><span data-i18n="t20">, founder &amp; builder</span> </p>
 </div>
@@ -1895,7 +1895,7 @@ html[data-current-lang="ar"] .lang-caret {
 <div class="scene-text">
 <p class="scene-label-sm"><span data-i18n="t36">Your space</span></p>
 <h3><span data-i18n="t37">Stable WiFi. Quiet mornings. Zero tourist infrastructure.</span></h3>
-<p><span data-i18n="t38">这是一个适合慢慢工作、度过漫长早晨的安静基点，也适合拍到那种只有在更久、更自由的停留中才会出现的素材。房子里有十二间房、一个共用厨房、一间你看不完的书房，还有一个会让人很难坐下来工作的景色。但你还是会坐下来，因为山会一直在那里。</span></p>
+<p><span data-i18n="t38">A quiet base for slow work, long mornings, and the kind of footage that only appears through a longer, freer stay. The house has twelve rooms, a shared kitchen, a reading room with more books than you'll finish, and a view that makes it hard to sit down and work. But you will sit down, because the mountains will still be there.</span></p>
 </div>
 </div>
 </section>
@@ -2044,7 +2044,7 @@ html[data-current-lang="ar"] .lang-caret {
 <animate attributeName="opacity" begin="0.5s" dur="3s" repeatCount="indefinite" values=".14;0;.14"></animate>
 </circle>
 <!-- 中心核 -->
-<circle class="r-center-hit" cx="820" cy="500" fill="#003023" pointer-events="all" r="58" style="cursor:pointer"></circle>
+<circle class="r-center-hit" cx="820" cy="500" fill="#003023" pointer-events="all" r="48" style="cursor:pointer"></circle>
 <text fill="#F6FEF9" font-family="Outfit,sans-serif" font-size="14" font-weight="600" letter-spacing="1.4" text-anchor="middle" x="820">
 <tspan data-i18n="t101" x="820" y="493">WE ARE</tspan>
 <tspan data-i18n="t102" x="820" y="521">HERE</tspan>
@@ -2235,7 +2235,7 @@ html[data-current-lang="ar"] .lang-caret {
 <path d="M820,500 L989,438" fill="none" id="p-market"></path>
 <!-- center label, kept above rays and moving particles -->
 <g class="r-center-top r-center-hit" pointer-events="all" style="cursor:pointer">
-<circle class="r-center-hit" cx="820" cy="500" fill="#003023" pointer-events="all" r="58" style="cursor:pointer"></circle>
+<circle class="r-center-hit" cx="820" cy="500" fill="#003023" pointer-events="all" r="48" style="cursor:pointer"></circle>
 <text fill="#F6FEF9" font-family="Outfit,sans-serif" font-size="14" font-weight="600" letter-spacing="1.4" text-anchor="middle" x="820">
 <tspan data-i18n="t125" x="820" y="493">WE ARE</tspan>
 <tspan data-i18n="t126" x="820" y="521">HERE</tspan>
@@ -2243,7 +2243,7 @@ html[data-current-lang="ar"] .lang-caret {
 </g>
 </svg>
 </div>
-<p class="map-hint"><span data-i18n="t127">*点击地图上的名称，可查看对应图片。</span></p>
+<p class="map-hint"><span data-i18n="t127">*Tap a name on the map to view its image.</span></p>
 </div>
 </section>
 <!-- ══ PRICING ══ -->
@@ -2742,25 +2742,27 @@ if (rTip) {
     mapDemoRunId++;
     showTip(copy[0], copy[1], centerImage, e);
   }
-  if (centerNode) {
+  if (centerNodes.length) {
     preloadMapImage(centerImage);
-    centerNode.addEventListener('mouseenter', e => {
-      if (isMobileOrTablet()) return;
-      showCenterTip(e);
-    });
-    centerNode.addEventListener('mousemove', e => {
-      if (isMobileOrTablet()) return;
-      moveTooltip(e);
-    });
-    centerNode.addEventListener('mouseleave', () => {
-      if (isMobileOrTablet()) return;
-      rTip.classList.remove('show');
-    });
-    centerNode.addEventListener('click', e => {
-      if (!isMobileOrTablet()) return;
-      e.preventDefault();
-      e.stopPropagation();
-      showCenterTip(e);
+    centerNodes.forEach(centerNode => {
+      centerNode.addEventListener('mouseenter', e => {
+        if (isMobileOrTablet()) return;
+        showCenterTip(e);
+      });
+      centerNode.addEventListener('mousemove', e => {
+        if (isMobileOrTablet()) return;
+        moveTooltip(e);
+      });
+      centerNode.addEventListener('mouseleave', () => {
+        if (isMobileOrTablet()) return;
+        rTip.classList.remove('show');
+      });
+      centerNode.addEventListener('click', e => {
+        if (!isMobileOrTablet()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        showCenterTip(e);
+      });
     });
   }
   document.addEventListener('click', (e) => {
