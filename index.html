@@ -1,4 +1,4 @@
-<!DOC"zh-TW":{zh-TW":{YPE html>
+﻿<!DOC"zh-TW":{zh-TW":{YPE html>
 
 <html data-default-lang="en" dir="ltr" lang="en">
 <head>
@@ -1785,13 +1785,77 @@ html[data-current-lang="ar"] .lang-caret {
 .icon-village { background-image:url('assets/icons/magpie-village-v2.png?v=20260704b') !important; }
 .icon-house { background-image:url('assets/icons/magpie-house-v2.png?v=20260704b') !important; }
 .icon-after-dark { background-image:url('assets/icons/magpie-after-dark-v2.png?v=20260704b') !important; }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  .possible-node::before,
   .possible-node::after {
-    left:calc(50% + 42px) !important;
-    right:calc(-50% + 42px) !important;
+    content:'' !important;
+    position:absolute !important;
     top:56px !important;
+    height:1px !important;
     background:#0b3025 !important;
     opacity:.9 !important;
+    pointer-events:none !important;
+    display:block !important;
+  }
+  .possible-node::before {
+    left:0 !important;
+    right:calc(50% + 42px) !important;
+  }
+  .possible-node::after {
+    left:calc(50% + 42px) !important;
+    right:0 !important;
+  }
+}
+@media (min-width: 761px) and (max-width: 1024px) and (orientation: portrait) {
+  .possible-node {
+    padding-top:112px !important;
+  }
+  .possible-node::before,
+  .possible-node::after {
+    content:'' !important;
+    position:absolute !important;
+    top:64px !important;
+    height:1px !important;
+    background:#0b3025 !important;
+    opacity:.9 !important;
+    pointer-events:none !important;
+    display:block !important;
+  }
+  .possible-node::before {
+    left:0 !important;
+    right:calc(50% + 42px) !important;
+  }
+  .possible-node::after {
+    left:calc(50% + 42px) !important;
+    right:0 !important;
+  }
+  .possible-num {
+    top:0 !important;
+  }
+  .possible-icon,
+  .icon-after-dark {
+    top:26px !important;
+  }
+}
+@media (max-width: 760px) {
+  .possible-node::before,
+  .possible-node::after {
+    content:'' !important;
+    position:absolute !important;
+    top:56px !important;
+    height:1px !important;
+    background:#0b3025 !important;
+    opacity:.9 !important;
+    pointer-events:none !important;
+    display:block !important;
+  }
+  .possible-node::before {
+    left:0 !important;
+    right:calc(50% + 42px) !important;
+  }
+  .possible-node::after {
+    left:calc(50% + 42px) !important;
+    right:0 !important;
   }
   .possible-icon,
   .icon-after-dark {
@@ -2621,7 +2685,7 @@ if (rTip) {
   const dots = svg.querySelectorAll('.r-dot');
   const names = svg.querySelectorAll('.r-name');
   const dists = svg.querySelectorAll('.r-dist');
-  const isMobileOrTablet = () => window.innerWidth <= 1024;
+  const isMobileOrTablet = () => window.innerWidth <= 1024 || window.matchMedia('(pointer: coarse)').matches;
   const isPhoneMap = () => window.innerWidth <= 1024;
   let mapUserInteracted = false;
   let mapDemoInView = false;
@@ -2947,6 +3011,12 @@ function showTip(name, desc, img, e) {
   if (img && img !== 'placeholder' && img !== '') {
     const optimizedImg = optimizedMapImageUrl(img);
     preloadMapImage(img);
+    rTipImg.onerror = () => {
+      if (rTipImg.src !== img) {
+        rTipImg.onerror = null;
+        rTipImg.src = img;
+      }
+    };
     rTipImg.src = optimizedImg;
     rTipImg.style.display = 'block';
     rTipImg.onload = () => applyTooltipImageCrop(name);
